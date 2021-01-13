@@ -16,8 +16,8 @@
         {
             var host = CreateWebHostBuilder(args).Build();
            
-            InitLogger();
-            InitContextSeed(host);
+            StartLogging();
+            StartSeeding(host);
 
             host.Run();
         }
@@ -44,16 +44,16 @@
 
         #region private function
 
-        private static void InitLogger()
+        private static void StartLogging()
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             try
             {
                 logger.Debug("init main");
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                logger.Error(exception, "Stopped program because of exception");
+                logger.Error(ex , "Stopped program because of exception");
                 throw;
             }
             finally
@@ -61,7 +61,7 @@
                 NLog.LogManager.Shutdown();
             }
         }
-        private  static void InitContextSeed(IWebHost host)
+        private  static void StartSeeding(IWebHost host)
         {
             using (var scope = host.Services.CreateScope())
             {

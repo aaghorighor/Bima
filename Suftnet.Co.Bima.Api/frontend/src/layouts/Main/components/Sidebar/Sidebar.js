@@ -4,16 +4,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
-import TextFieldsIcon from '@material-ui/icons/TextFields';
-import ImageIcon from '@material-ui/icons/Image';
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import SettingsIcon from '@material-ui/icons/Settings';
-import LockOpenIcon from '@material-ui/icons/LockOpen';
-import TestIcon from '@material-ui/icons/Dashboard'
-
-import { Profile, SidebarNav, UpgradePlan } from './components';
+import Link from '@material-ui/core/Link';
+import CommuteIcon from '@material-ui/icons/Commute';
+import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
+import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
+import { List, ListItem, Button, colors } from '@material-ui/core';
+import { Profile, SidebarNav } from './components';
 
 const useStyles = makeStyles(theme => ({
   drawer: {
@@ -35,7 +32,35 @@ const useStyles = makeStyles(theme => ({
   },
   nav: {
     marginBottom: theme.spacing(2)
+  },
+  button: {
+    color: colors.blueGrey[800],
+    padding: '10px 8px',
+    justifyContent: 'flex-start',
+    textTransform: 'none',
+    letterSpacing: 0,
+    width: '100%',
+    fontWeight: theme.typography.fontWeightMedium
+  },
+  icon: {
+    color: theme.palette.icon,
+    width: 24,
+    height: 24,
+    display: 'flex',
+    alignItems: 'center',
+    marginRight: theme.spacing(1)
+  },
+  active: {
+    color: theme.palette.primary.main,
+    fontWeight: theme.typography.fontWeightMedium,
+    '& $icon': {
+      color: theme.palette.primary.main
+    }
+  },
+  flexGrow: {
+    flexGrow: 1
   }
+ 
 }));
 
 const Sidebar = props => {
@@ -48,47 +73,24 @@ const Sidebar = props => {
       title: 'Dashboard',
       href: '/dashboard',
       icon: <DashboardIcon />
-    },
+    },    
     {
-      title: 'Users',
-      href: '/users',
-      icon: <PeopleIcon />
-    },
+      title: 'Sellers',
+      href: '/seller',
+      icon: <ShoppingBasketIcon /> 
+    }, 
     {
-      title: 'Products',
-      href: '/products',
-      icon: <ShoppingBasketIcon />
-    },
+      title: 'Buyers',
+      href: '/buyers',
+      icon: <ShoppingCartSharpIcon />
+    }, 
+
     {
-      title: 'Authentication',
-      href: '/sign-in',
-      icon: <LockOpenIcon />
-    },
-    {
-      title: 'Typography',
-      href: '/typography',
-      icon: <TextFieldsIcon />
-    },
-    {
-      title: 'Test',
-      href: '/test',
-      icon: <TestIcon />
-    },
-    {
-      title: 'Icons',
-      href: '/icons',
-      icon: <ImageIcon />
-    },
-    {
-      title: 'Account',
-      href: '/account',
-      icon: <AccountBoxIcon />
-    },
-    {
-      title: 'Settings',
-      href: '/settings',
-      icon: <SettingsIcon />
-    }
+      title: 'Logistics',
+      href: '/logistics',
+      icon: <CommuteIcon />
+    }  
+    
   ];
 
   return (
@@ -108,8 +110,15 @@ const Sidebar = props => {
         <SidebarNav
           className={classes.nav}
           pages={pages}
-        />
-        <UpgradePlan />
+        />     
+         <div className={classes.flexGrow} />
+          <Button
+            activeClassName={classes.active}
+            className={classes.button}        
+          >
+             <div className={classes.icon}><SettingsIcon /></div>
+             Settings          
+          </Button> 
       </div>
     </Drawer>
   );

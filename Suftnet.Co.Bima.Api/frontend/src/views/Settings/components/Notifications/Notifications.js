@@ -20,7 +20,10 @@ const useStyles = makeStyles(() => ({
   item: {
     display: 'flex',
     flexDirection: 'column'
-  }
+  },
+  marginLeft: {
+    marginLeft : 6
+   }
 }));
 
 const Notifications = props => {
@@ -131,6 +134,7 @@ const Notifications = props => {
         <Divider />
         <CardActions>
           <Button
+              className={classes.marginLeft}
             color="primary"
             variant="outlined"
           >

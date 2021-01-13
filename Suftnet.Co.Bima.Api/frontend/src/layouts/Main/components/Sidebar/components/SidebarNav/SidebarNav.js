@@ -37,6 +37,9 @@ const useStyles = makeStyles(theme => ({
     '& $icon': {
       color: theme.palette.primary.main
     }
+  },
+  flexGrow: {
+    flexGrow: 2
   }
 }));
 
@@ -64,7 +67,7 @@ const SidebarNav = props => {
           className={classes.item}
           disableGutters
           key={page.title}
-        >
+        >          
           <Button
             activeClassName={classes.active}
             className={classes.button}

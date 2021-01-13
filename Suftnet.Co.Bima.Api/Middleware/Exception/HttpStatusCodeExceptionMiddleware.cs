@@ -30,12 +30,12 @@
             }
         }
 
-        private Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private Task HandleExceptionAsync(HttpContext context, Exception ex)
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-            _logger.LogError($"Something went wrong: {exception}");
+            _logger.LogError($"Internal Server Error: {ex}");
 
             var result = JsonConvert.SerializeObject(new ErrorModel  {
                 StatusCode = context.Response.StatusCode,

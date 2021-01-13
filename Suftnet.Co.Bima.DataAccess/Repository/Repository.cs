@@ -3,7 +3,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using Suftnet.Co.Bima.DataAccess.Interface;
-    using Suftnet.Co.Bima.DataAccess.Models;  
+    using Suftnet.Co.Bima.DataAccess.Actions;  
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -14,10 +14,10 @@
            where T : class, new()
     {
 
-        private readonly BimaContext _context;
+        private readonly v12Context _context;
 
         #region Properties
-        public Repository(BimaContext context)
+        public Repository(v12Context context)
         {
             _context = context;
         }

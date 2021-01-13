@@ -7,6 +7,7 @@ import { AppBar, Toolbar, Badge, Hidden, IconButton } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
 import InputIcon from '@material-ui/icons/Input';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,14 +41,14 @@ const Topbar = props => {
           />
         </RouterLink>
         <div className={classes.flexGrow} />
-        <Hidden mdDown>
-          <IconButton color="inherit">
+
+        <IconButton color="inherit">
             <Badge
               badgeContent={notifications.length}
               color="primary"
               variant="dot"
             >
-              <NotificationsIcon />
+              <AccountCircle />
             </Badge>
           </IconButton>
           <IconButton
@@ -56,15 +57,7 @@ const Topbar = props => {
           >
             <InputIcon />
           </IconButton>
-        </Hidden>
-        <Hidden lgUp>
-          <IconButton
-            color="inherit"
-            onClick={onSidebarOpen}
-          >
-            <MenuIcon />
-          </IconButton>
-        </Hidden>
+        
       </Toolbar>
     </AppBar>
   );

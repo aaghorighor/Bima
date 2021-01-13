@@ -15,8 +15,8 @@
     using Suftnet.Co.Bima.Api.Models;
     using Suftnet.Co.Bima.Core;
     using Suftnet.Co.Bima.Core.Registry;
+    using Suftnet.Co.Bima.DataAccess.Actions;
     using Suftnet.Co.Bima.DataAccess.Identity;
-    using Suftnet.Co.Bima.DataAccess.Models;
     using Suftnet.Co.Bima.DataAccess.Registry;
 
     using System;
@@ -66,19 +66,19 @@
         }
         public static void IdentityContext(this IServiceCollection services, IConfiguration configuration)
         {          
-            services.AddDbContext<BimaContext>(options =>
+            services.AddDbContext<v12Context>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("Suftnet.Co.Bima.DataAccess")));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
-                 .AddEntityFrameworkStores<BimaContext>()
+                 .AddEntityFrameworkStores<v12Context>()
                  .AddDefaultTokenProviders();
         }
         public static void JwtContext(this IServiceCollection services, IConfiguration configuration)
         {
-            var settingModel = configuration.GetSection(nameof(SettingModel));
-            services.Configure<SettingModel>(settingModel);
+            var config = configuration.GetSection(nameof(Config));
+            services.Configure<Config>(config);
 
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(settingModel[nameof(SettingModel.SecretKey)]));
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(config[nameof(Config.SecretKey)]));
             var jwtAppSettingOptions = configuration.GetSection(nameof(JwtIssuerOptions));
 
             services.Configure<JwtIssuerOptions>(options =>

@@ -6,7 +6,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    public class ApplicationUser : IdentityUser<string>
+    public class ApplicationUser : IdentityUser
     {       
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }

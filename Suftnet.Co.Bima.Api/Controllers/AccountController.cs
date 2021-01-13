@@ -1,6 +1,5 @@
 ﻿namespace EventHub.Api.Controllers
-{
-    using Microsoft.AspNetCore.Http;
+{   
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Suftnet.Co.Bima.Api.Extensions;
@@ -34,7 +33,7 @@
 
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody]LoginModel loginModel)
+        public async Task<IActionResult> Login([FromBody]LoginDto loginModel)
         {
             if (!ModelState.IsValid)
             {                
@@ -43,7 +42,12 @@
 
             var user = await _userManager.FindByNameAsync(loginModel.UserName);
 
-            var identity = await GetClaimsIdentity(loginModel.UserName, loginModel.Password, user);
+            if (user == null)
+            {
+                return BadRequest(new { message = ValidationError.PASSWORD_OR_USERNAME });
+            }
+
+            var identity = await GetClaimsIdentity(loginModel.Password, user);
             if (identity == null)
             {
                 return BadRequest(new { message = ValidationError.PASSWORD_OR_USERNAME });
@@ -62,13 +66,8 @@
         }
 
         #region private 
-        private async Task<ClaimsIdentity> GetClaimsIdentity(string userName, string password, ApplicationUser user)
-        {
-            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
-                return await Task.FromResult<ClaimsIdentity>(null);                      
-                      
-            if (user == null) return await Task.FromResult<ClaimsIdentity>(null);
-                        
+        private async Task<ClaimsIdentity> GetClaimsIdentity(string password, ApplicationUser user)
+        {                                                
             if (await _userManager.CheckPasswordAsync(user, password))
             {
                 return await Task.FromResult(_jwtFactory.GenerateClaimsIdentity(user));

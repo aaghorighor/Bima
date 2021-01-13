@@ -13,7 +13,10 @@ import {
 } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
-  root: {}
+  root: {},
+  marginLeft: {
+   marginLeft : 9
+  }
 }));
 
 const Password = props => {
@@ -68,6 +71,7 @@ const Password = props => {
         <Divider />
         <CardActions>
           <Button
+            className={classes.marginLeft}
             color="primary"
             variant="outlined"
           >

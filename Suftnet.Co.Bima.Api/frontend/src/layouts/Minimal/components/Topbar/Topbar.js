@@ -1,19 +1,29 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/styles';
-import { AppBar, Toolbar } from '@material-ui/core';
+import { AppBar, Toolbar,IconButton } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
+import PublicRoundedIcon from '@material-ui/icons/PublicRounded';
 
-const useStyles = makeStyles(() => ({
+const useStyles =  makeStyles(theme => ({
   root: {
     boxShadow: 'none'
+  },
+  title: {
+    display: 'none',
+    color: 'white',
+    [theme.breakpoints.up('sm')]: {
+      display: 'block'
+    }
+  },
+  menuButton: {
+    marginRight: theme.spacing(1),
   }
 }));
 
 const Topbar = props => {
   const { className, ...rest } = props;
-
   const classes = useStyles();
 
   return (
@@ -24,12 +34,17 @@ const Topbar = props => {
       position="fixed"
     >
       <Toolbar>
-        <RouterLink to="/">
-          <img
-            alt="Logo"
-            src="/images/logos/logo--white.svg"
-          />
-        </RouterLink>
+         <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="open drawer"
+          >
+            <PublicRoundedIcon />
+          </IconButton>
+          <Typography className={classes.title} variant="h6" noWrap>
+          
+        </Typography>
       </Toolbar>
     </AppBar>
   );

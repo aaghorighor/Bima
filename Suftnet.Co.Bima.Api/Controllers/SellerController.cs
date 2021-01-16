@@ -70,7 +70,7 @@
             }
 
             var user = _mapper.Map<ApplicationUser>(model);
-            user.Id = new System.Guid().ToString();
+            user.Id = Guid.NewGuid().ToString();
             user.UserType = UserType.DRIVER;
             var result = await _userManager.CreateAsync(user, model.Password);
 

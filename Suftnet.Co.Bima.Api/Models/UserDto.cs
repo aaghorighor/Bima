@@ -5,6 +5,7 @@
 
     public class UserDto
     {
+        public string Id { get; set; }
         [Required]
         [StringLength(50)]
         public string Email { get; set; }
@@ -17,10 +18,11 @@
         [StringLength(50)]
         public string PhoneNumber { get; set; }
         [StringLength(50)]
-        public string Description { get; set; }        
+        public string Description { get; set; }
         [StringLength(50)]
         public string ImageUrl { get; set; }
         public bool Active { get; set; }
+        public string UserType { get; set; }
     }
 
     public class CreateUser : UserDto
@@ -47,8 +49,11 @@
     {
         [Required]
         public string Id { get; set; }
+        [StringLength(50)]
+        [Required]
         public string FirstName { get; set; }
         [StringLength(50)]
+        [Required]
         public string LastName { get; set; }
         [StringLength(50)]
         public string PhoneNumber { get; set; }
@@ -57,6 +62,9 @@
         [StringLength(50)]
         public string ImageUrl { get; set; }
         public bool Active { get; set; }
+        [Required]
+        [StringLength(50)]
+        public string Email { get; set; }
     }
     public class RemoveUser
     {

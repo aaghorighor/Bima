@@ -157,7 +157,14 @@ const SignIn = props => {
   }, [formState.values]);
 
   const handleBack = () => {
-    history.goBack();
+
+    const { user } = state;
+
+    if(user != null)
+    {
+      history.goBack();
+    }
+   
   };
 
   const handleChange = event => {

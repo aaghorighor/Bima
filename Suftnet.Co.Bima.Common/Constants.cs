@@ -19,7 +19,7 @@
 
     public static class UserType
     {
-        public const string BUYER = "Buyer", SELLER = "Seller", DRIVER = "Driver", BACKOFFICE = "BackOffice", FRONTOFFICE = "FrontOffice";
+        public const string BUYER = "Buyer", SELLER = "Seller", DRIVER = "Driver", BACKOFFICE = "BackOffice";
     }
 
     public static class CompanyType
@@ -27,6 +27,11 @@
         public const string Buyer = "ED9EB336-D246-4747-ADB1-42FD95D98E4C";
         public const string Seller = "FFA01FE4-8B49-41E9-A630-70FD7E756ECC";
         public const string Logistic = "BFF4A1B2-8D64-4919-A91D-4E96E61E1A5B";
+    }
+
+    public static class Constants
+    {
+        public const string DefaultPassword = "Vx!1234567";      
     }
 
 }

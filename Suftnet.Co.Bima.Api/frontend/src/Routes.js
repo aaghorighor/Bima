@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Redirect } from 'react-router-dom';
-
 import { RouteLayout } from './components';
 import { Main as MainLayout, Minimal as MinimalLayout } from './layouts';
 
@@ -9,6 +8,7 @@ import {
   Settings as SettingsView,
   SignUp as SignUpView,
   SignIn as SignInView,
+  Users as UserView,
   NotFound as NotFoundView
 } from './views';
 
@@ -32,6 +32,12 @@ const Routes = () => {
         layout={MainLayout}
         path="/settings"
       />
+      <RouteLayout
+        component={UserView}
+        exact
+        layout={MainLayout}
+        path="/users"
+      />      
       <RouteLayout
         component={SignUpView}
         exact

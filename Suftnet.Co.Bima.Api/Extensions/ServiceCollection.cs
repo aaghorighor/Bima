@@ -3,6 +3,7 @@
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Infrastructure;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -21,6 +22,7 @@
 
     using System;
     using System.Text;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
     public static class ServicesConfiguration
@@ -49,9 +51,9 @@
         {
             services.AddMvc(option => option.EnableEndpointRouting = false).AddJsonOptions(options =>
             {
-                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase; 
                 options.JsonSerializerOptions.DictionaryKeyPolicy = null;
-            });          
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         public static void Cors(this IServiceCollection services)

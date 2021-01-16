@@ -58,13 +58,18 @@ export const login =(params) => {
         params.dispatch(successState(json.data));
         navigateTo(json.data,params.history);         
       
-    }).catch(error => {               
-       params.dispatch(failStates(error.response.data));
+    }).catch(error => {    
+        
+        if (error.response && error.response.data) {
+            params.dispatch(failStates(error.response.data));
+        }
+     
     });
 };
 
-export const logout =(dispatch)=>{
-    dispatch(logoutState());  
+export const logout =(params)=>{
+    params.dispatch(logoutState());  
+    params.history.push("/sign-in")
 }
 
 export const accountReducer = (state, action)=>
@@ -93,8 +98,7 @@ export const accountReducer = (state, action)=>
           };
 
       case LOGOUT :
-        return {
-  
+        return {  
               ...state,
               user :action.user,
               message : action.message,

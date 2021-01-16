@@ -56,24 +56,29 @@
 
             if (email != null)
             {
-                return BadRequest(new { message = ModelStateError.AddErrorToModelState(StatusCodes.Status400BadRequest.ToString(), ValidationError.EMAIL_FOUND, ModelState) });
+                return BadRequest(new { message = ValidationError.EMAIL_FOUND});
             }
-           
-            var identity = _mapper.Map<ApplicationUser>(model);
 
+            model.Password = Constants.DefaultPassword;
+            var identity = _mapper.Map<ApplicationUser>(model);
+            identity.Id = Guid.NewGuid().ToString();
+            identity.CreatedAt = DateTime.UtcNow;
+            identity.IsEnabled = model.Active;
             var result = await _userManager.CreateAsync(identity, model.Password);
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });
+                return BadRequest(new { message = ValidationError.EMAIL_FOUND });
             }
-            
-            return new OkObjectResult(true);
+
+            var newUser = _mapper.Map<UserDto>(identity);
+
+            return new OkObjectResult(newUser);
         }
 
         [HttpPost]
         [Route("update")]
-        public async Task<IActionResult> Update([FromBody] UpdateUser model)
+        public async Task<IActionResult> Update([FromBody]UpdateUser model)
         {
             if (!ModelState.IsValid)
             {               
@@ -85,7 +90,13 @@
             if (user == null)
             {
                 return BadRequest(new { message = ValidationError.USER_NOT_FOUND });               
-            }        
+            }
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            user.IsEnabled = model.Active;
 
             var result = await _userManager.UpdateAsync(user);
 

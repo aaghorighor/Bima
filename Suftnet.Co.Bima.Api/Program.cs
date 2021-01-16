@@ -14,9 +14,8 @@
     {
         public static void Main(string[] args)
         {
-            var host = CreateWebHostBuilder(args).Build();
-           
-            StartLogging();
+            var host = CreateWebHostBuilder(args).Build();          
+            
             StartSeeding(host);
 
             host.Run();
@@ -34,12 +33,12 @@
 
                     config.AddEnvironmentVariables();
 
-                }).ConfigureLogging(logging =>
+                }).ConfigureLogging((hostingContext, logging) =>
                 {
-                    logging.ClearProviders();
-                    logging.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+                    logging.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+                    logging.AddDebug();                 
 
-        }).UseNLog().UseStartup<Startup>();
+                }).UseNLog().UseStartup<Startup>();
 
 
         #region private function

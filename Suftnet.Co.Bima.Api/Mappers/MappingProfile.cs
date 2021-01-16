@@ -9,14 +9,14 @@
     {
         public MappingProfile()
         {
-            this.CreateMap<ApplicationUser, UserDto>().ForMember(x => x.Description, map => map.Ignore()).ForMember(x => x.Password, map => map.Ignore());
+            this.CreateMap<ApplicationUser, UserDto>().ForMember(x => x.Description, map => map.Ignore()).ForMember(x => x.Password, map => map.Ignore()).ForMember(x=>x.Active, map=>map.MapFrom(j=>j.IsEnabled));
             this.CreateMap<CreateSeller, Seller>();
             this.CreateMap<CreateDriver, Driver>();
             this.CreateMap<CreateBuyer, Buyer>();
 
             this.CreateMap<CreateUser, ApplicationUser>().ForMember(x => x.UserName, map => map.MapFrom(j => j.Email));
-            this.CreateMap<UpdateUser, ApplicationUser>();
-                     
+            this.CreateMap<UpdateUser, ApplicationUser>().ForMember(x => x.UserName, map => map.MapFrom(j => j.Email));
+
             this.CreateMap<CreateCompany, Company>();
             this.CreateMap<UpdateCompany, Company>();
 

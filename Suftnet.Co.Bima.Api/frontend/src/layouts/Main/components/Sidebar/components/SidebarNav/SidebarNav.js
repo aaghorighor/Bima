@@ -37,9 +37,6 @@ const useStyles = makeStyles(theme => ({
     '& $icon': {
       color: theme.palette.primary.main
     }
-  },
-  flexGrow: {
-    flexGrow: 2
   }
 }));
 
@@ -52,9 +49,9 @@ const CustomRouterLink = forwardRef((props, ref) => (
   </div>
 ));
 
+
 const SidebarNav = props => {
   const { pages, className, ...rest } = props;
-
   const classes = useStyles();
 
   return (
@@ -69,9 +66,9 @@ const SidebarNav = props => {
           key={page.title}
         >          
           <Button
-            activeClassName={classes.active}
-            className={classes.button}
-            component={CustomRouterLink}
+            className={classes.active}
+            className={classes.button}       
+            component={CustomRouterLink}   
             to={page.href}
           >
             <div className={classes.icon}>{page.icon}</div>

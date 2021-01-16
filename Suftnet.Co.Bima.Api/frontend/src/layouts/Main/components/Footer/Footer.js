@@ -6,7 +6,8 @@ import { Typography, Link } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    padding: theme.spacing(4)
+    padding: theme.spacing(4),
+    flexGrow: 1
   }
 }));
 
@@ -27,13 +28,12 @@ const Footer = props => {
           href="https://devias.io/"
           target="_blank"
         >
-          Devias IO
+         v12 
         </Link>
-        . 2019
+        . 2021
       </Typography>
       <Typography variant="caption">
-        Created with love for the environment. By designers and developers who
-        love to work together in offices!
+       Powered By Suftnet Imt.
       </Typography>
     </div>
   );

@@ -31,7 +31,7 @@ const Profile = props => {
   const user = {
     name: state.user == null ? "" : state.user.user.userName,
     avatar: '/images/avatars/avatar_11.png',
-    bio: 'Then use that custom hooks in the components i'
+    bio: ''
   };
 
   return (
@@ -51,8 +51,7 @@ const Profile = props => {
         variant="h5"
       >
         {user.name}
-      </Typography>
-      <Typography variant="body2">{user.bio}</Typography>
+      </Typography>     
     </div>
   );
 };

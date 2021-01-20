@@ -14,18 +14,7 @@
                 options => options.AllowAnyOrigin()
             );                       
         }
-
-        public static void Spa(this IApplicationBuilder app)
-        {
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "frontend";
-                spa.UseReactDevelopmentServer(npmScript: "start");
-                //spa.UseProxyToSpaDevelopmentServer("http://localhost:62137");
-
-            });
-        }
-
+             
         public static IApplicationBuilder UseSecurityHeadersMiddleware(this IApplicationBuilder app, SecurityHeadersBuilder builder)
         {
             if (app == null)

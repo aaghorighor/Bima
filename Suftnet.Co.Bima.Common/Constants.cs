@@ -19,7 +19,7 @@
 
     public static class UserType
     {
-        public const string BUYER = "Buyer", SELLER = "Seller", DRIVER = "Driver", BACKOFFICE = "BackOffice";
+        public const string BUYER = "Buyer", SELLER = "Farmer", Logistic = "Logistic", BACKOFFICE = "BackOffice";
     }
 
     public static class CompanyType

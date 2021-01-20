@@ -92,7 +92,7 @@
                     sellerUser.Id = Guid.NewGuid().ToString();
                     _userManager.CreateAsync(sellerUser, "P@ssw0rd!").Result.ToString();
 
-                    var logisticUser = new ApplicationUser { UserType = UserType.DRIVER, UserName = "logistic@v12.com", FirstName = "Logistic", LastName = "Logistic", Email = "logistic@v12.com", PhoneNumber = "012345678SSS9", EmailConfirmed = true, CreatedAt = DateTime.Now, IsEnabled = true };
+                    var logisticUser = new ApplicationUser { UserType = UserType.Logistic, UserName = "logistic@v12.com", FirstName = "Logistic", LastName = "Logistic", Email = "logistic@v12.com", PhoneNumber = "012345678SSS9", EmailConfirmed = true, CreatedAt = DateTime.Now, IsEnabled = true };
                     logisticUser.Id = Guid.NewGuid().ToString();
                     _userManager.CreateAsync(logisticUser, "P@ssw0rd!").Result.ToString();                 
 

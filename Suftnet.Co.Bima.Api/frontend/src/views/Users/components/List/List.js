@@ -28,6 +28,7 @@ import validate from 'validate.js';
 import { deleteUser, create,update } from '../../../actions/user';
 import Input from '@material-ui/core/Input';
 import { Update } from '@material-ui/icons';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles((theme)=>({
     root: {
@@ -49,6 +50,12 @@ const useStyles = makeStyles((theme)=>({
       display: 'flex',
       alignItems: 'center',     
       margin : theme.spacing(1)
+    },
+    header: {
+      height: '42px',
+      display: 'flex',
+      alignItems: 'center',     
+      marginLeft : theme.spacing(2)
     },
     spacer: {
       flexGrow: 1
@@ -215,6 +222,11 @@ const List = props =>{
     return (
       <div {...rest}
       className={clsx(classes.root, className)}> 
+       <div className={classes.header}>      
+        <Typography variant="h1" component="h2">
+          Users
+        </Typography>
+      </div>
       <div className={classes.row}> 
       <span className={classes.spacer} />
         <Button

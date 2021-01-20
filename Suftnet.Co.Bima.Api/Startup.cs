@@ -15,6 +15,8 @@
     using Microsoft.AspNetCore.Hosting;   
     using Microsoft.AspNetCore.Http;
     using Microsoft.Net.Http.Headers;
+    using Microsoft.Extensions.Hosting;
+    using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 
     public class Startup
     {
@@ -82,7 +84,15 @@
                 }
             }); 
             app.UseSpaStaticFiles();
-            app.Spa();
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "frontend";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseReactDevelopmentServer(npmScript: "start");
+                }
+            });
         }
     }
 }

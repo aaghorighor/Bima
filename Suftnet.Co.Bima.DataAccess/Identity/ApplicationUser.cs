@@ -1,6 +1,7 @@
 ﻿namespace Suftnet.Co.Bima.DataAccess.Identity
 {
     using Microsoft.AspNetCore.Identity;
+    using Suftnet.Co.Bima.DataAccess.Actions;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -14,6 +15,8 @@
         public string LastName { get; set; }
         public bool IsEnabled { get; set; }
         public string UserType { get; set; }
+        public string OTP { get; set; }
+        public string ImageUrl { get; set; }
         [NotMapped]
         public string FullName
         {
@@ -22,5 +25,7 @@
                 return this.FirstName + " " + this.LastName;
             }
         }
+    
+        public virtual AspNetUsers AspNetUsers { get; set; }
     }
 }

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Suftnet.Co.Bima.DataAccess.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
@@ -9,8 +12,11 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         {        
             Driver = new HashSet<Driver>();
             Seller = new HashSet<Seller>();
+            Buyer = new HashSet<Buyer>();
         }
 
+        [Key]
+        [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
@@ -34,7 +40,8 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public string NormalizedUserName { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; }
         public string ConcurrencyStamp { get; set; }
-   
+        public virtual ApplicationUser ApplicationUser { get; set; }
+        public virtual ICollection<Buyer> Buyer { get; set; }
         public virtual ICollection<Driver> Driver { get; set; }
         public virtual ICollection<Seller> Seller { get; set; }
     }

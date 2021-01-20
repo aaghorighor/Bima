@@ -16,7 +16,7 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
             : base(options)
         {
         }
-
+        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
         public virtual DbSet<AddressType> AddressType { get; set; }
         public virtual DbSet<Area> Area { get; set; }       
         public virtual DbSet<Bargain> Bargain { get; set; }
@@ -39,13 +39,13 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\;Database=v12;Trusted_Connection=True;");
+                //optionsBuilder.UseSqlServer("Server=.\\;Database=v12;Trusted_Connection=True;");
             }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);            
         }
     }
 }

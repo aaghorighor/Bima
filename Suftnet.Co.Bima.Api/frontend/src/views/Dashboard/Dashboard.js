@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
 import { Grid } from '@material-ui/core';
+import { Bargains, Deliveries, Offers, Users} from './components'
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +26,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-        <p>Testing....</p>
+       <Bargains />
         </Grid>
         <Grid
           item
@@ -34,7 +35,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-    
+        <Offers></Offers>
         </Grid>
         <Grid
           item
@@ -43,7 +44,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-         
+         <Deliveries></Deliveries>
         </Grid>
         <Grid
           item
@@ -52,7 +53,7 @@ const Dashboard = () => {
           xl={3}
           xs={12}
         >
-        
+        <Users></Users>
         </Grid>
         <Grid
           item

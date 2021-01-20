@@ -9,6 +9,9 @@ import {
   SignUp as SignUpView,
   SignIn as SignInView,
   Users as UserView,
+  Farmers as FarmersView,
+  Buyers as BuyersView,
+  Drivers as DriversView,
   NotFound as NotFoundView
 } from './views';
 
@@ -37,7 +40,25 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/users"
-      />      
+      />     
+       <RouteLayout
+        component={FarmersView}
+        exact
+        layout={MainLayout}
+        path="/farmers"
+      />       
+       <RouteLayout
+        component={BuyersView}
+        exact
+        layout={MainLayout}
+        path="/buyers"
+      />     
+       <RouteLayout
+        component={DriversView}
+        exact
+        layout={MainLayout}
+        path="/drivers"
+      />     
       <RouteLayout
         component={SignUpView}
         exact

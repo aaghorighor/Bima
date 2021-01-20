@@ -74,8 +74,8 @@ const Sidebar = props => {
       icon: <DashboardIcon />
     },    
     {
-      title: 'Sellers',
-      href: '/seller',
+      title: 'Farmers',
+      href: '/farmers',
       icon: <ShoppingBasketIcon /> 
     }, 
     {
@@ -85,7 +85,7 @@ const Sidebar = props => {
     }, 
     {
       title: 'Logistics',
-      href: '/not-found',
+      href: '/drivers',
       icon: <CommuteIcon />
     },
     {

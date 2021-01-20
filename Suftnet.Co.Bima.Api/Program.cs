@@ -16,7 +16,7 @@
         {
             var host = CreateWebHostBuilder(args).Build();          
             
-            StartSeeding(host);
+            //StartSeeding(host);
 
             host.Run();
         }

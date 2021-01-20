@@ -13,7 +13,7 @@ import PublicRoundedIcon from '@material-ui/icons/PublicRounded';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    boxShadow: 'none'   
+    
   },
   flexGrow: {
     flexGrow: 1
@@ -69,12 +69,11 @@ const Topbar = props => {
           >
             <PublicRoundedIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            
+          <Typography className={classes.title} variant="h3" noWrap>
+            Farm Hub
         </Typography>
         <div className={classes.flexGrow} />
-        <IconButton color="inherit">
-        <   AccountCircle />
+        <IconButton color="inherit">      
           </IconButton>
           <IconButton
             className={classes.signOutButton}

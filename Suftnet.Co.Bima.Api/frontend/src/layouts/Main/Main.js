@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/styles';
 import { useMediaQuery } from '@material-ui/core';
-
 import { Sidebar, Topbar, Footer } from './components';
 
 const useStyles = makeStyles(theme => ({
@@ -19,7 +18,10 @@ const useStyles = makeStyles(theme => ({
   },
   content: {
     height: '100%'
-  }
+  },
+  flexGrow: {
+    flex: 2
+  },
 }));
 
 const Main = props => {
@@ -54,6 +56,7 @@ const Main = props => {
       />
       <main className={classes.content}>
         {children}     
+        <div className={classes.flexGrow}></div>
         <Footer />
       </main>
     </div>

@@ -24,6 +24,8 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public string UserId { get; set; }
         public Guid CompanyId { get; set; }
         [ForeignKey("CompanyId")]
-        public virtual Company Company { get; set; }      
+        public virtual Company Company { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AspNetUsers User { get; set; }
     }
 }

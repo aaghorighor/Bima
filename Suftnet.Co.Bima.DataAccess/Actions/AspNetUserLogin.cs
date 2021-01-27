@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
+#nullable disable
+
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
-    public partial class AspNetUserLogins
+    public partial class AspNetUserLogin
     {
         public string LoginProvider { get; set; }
         public string ProviderKey { get; set; }

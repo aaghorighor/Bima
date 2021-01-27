@@ -26,6 +26,6 @@
             }
         }
     
-        public virtual AspNetUsers AspNetUsers { get; set; }
+        public virtual AspNetUser AspNetUsers { get; set; }
     }
 }

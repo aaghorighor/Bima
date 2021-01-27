@@ -1,5 +1,5 @@
-//export const host = "http://localhost:62137/api/";
-export const host ="http://kcmkcm-001-site9.btempurl.com/api/"
+export const host = "http://localhost:62137/api/";
+//export const host ="http://kcmkcm-001-site9.btempurl.com/api/"
 //export const host = "http://localhost:62137/api/";
 
 // login

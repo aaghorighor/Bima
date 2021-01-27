@@ -25,8 +25,9 @@
         private readonly IMapper _mapper;
         private readonly IRepository<Driver> _driver;
         private readonly IJwtFactory _jwtFactory;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public DriverController(UserManager<ApplicationUser> userManager,
+        public DriverController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork,
             IMapper mapper, IRepository<Driver> driver, IJwtFactory jwtFactory,
            IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
@@ -34,6 +35,7 @@
             _mapper = mapper;
             _driver = driver;
             _jwtFactory = jwtFactory;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -81,15 +83,16 @@
 
             var driver = _mapper.Map<Driver>(model);
 
-            driver.Id = new System.Guid();
+            driver.Id = Guid.NewGuid();
             driver.UserId = user.Id;
             driver.CreatedAt = DateTime.UtcNow;
             driver.CreatedBy = model.Email;
 
            _driver.Add(driver);
+           _unitOfWork.SaveChanges();
 
             var jwt = await _jwtFactory.GenerateEncodedToken(model.Email, _jwtFactory.GenerateClaimsIdentity(user));
-            return new OkObjectResult(new { token = jwt, userName = model.FirstName + " " + model.LastName });
+            return new OkObjectResult(new { token = jwt, id = driver.Id, userName = model.FirstName + " " + model.LastName });
         }
 
     }

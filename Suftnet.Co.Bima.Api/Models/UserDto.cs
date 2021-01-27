@@ -32,7 +32,7 @@
 
     public class CreateSeller : UserDto
     {
-        public Guid CompanyId { get; set; }
+
     }
 
     public class CreateBuyer : UserDto

@@ -108,7 +108,7 @@
 
                 if (!_context.Seller.Any())
                 {
-                    var seller = new Seller { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "2192115c-21df-4357-a92a-00b2d4c82b74", CompanyId = new Guid("158AB02F-99A4-4220-4126-08D8B7E74690"), FirstName = "Seller", LastName = "Seller", Email = "seller@v12.com", PhoneNumber = "012345678SS9", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
+                    var seller = new Seller { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "2192115c-21df-4357-a92a-00b2d4c82b74", FirstName = "Seller", LastName = "Seller", Email = "seller@v12.com", PhoneNumber = "012345678SS9", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
                     seller.Id = Guid.NewGuid();
                    _seller.Add(seller);               
                 }

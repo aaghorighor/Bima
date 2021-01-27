@@ -25,8 +25,9 @@
         private readonly IMapper _mapper;
         private readonly IRepository<Buyer> _buyer;   
         private readonly IJwtFactory _jwtFactory;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public BuyerController(UserManager<ApplicationUser> userManager,
+        public BuyerController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork,
             IMapper mapper, IRepository<Buyer> buyer, IJwtFactory jwtFactory,           
            IHttpContextAccessor httpContextAccessor) :base(httpContextAccessor)
         {
@@ -34,6 +35,7 @@
             _mapper = mapper;
             _buyer = buyer;         
             _jwtFactory = jwtFactory;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -81,16 +83,17 @@
 
             var buyer = _mapper.Map<Buyer>(model);
           
-            buyer.Id = new Guid();           
+            buyer.Id = Guid.NewGuid();           
             buyer.UserId = user.Id;
             buyer.CreatedAt = DateTime.UtcNow;
             buyer.CreatedBy = model.Email;
 
            _buyer.Add(buyer);
+           _unitOfWork.SaveChanges();
 
             var jwt = await _jwtFactory.GenerateEncodedToken(model.Email, _jwtFactory.GenerateClaimsIdentity(user));
 
-            return new OkObjectResult(new { token = jwt, userName = model.FirstName +" " + model.LastName });
+            return new OkObjectResult(new { token = jwt, id = buyer.Id, userName = model.FirstName + " " + model.LastName });
         }
        
     }

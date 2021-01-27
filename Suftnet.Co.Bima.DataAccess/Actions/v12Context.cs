@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Suftnet.Co.Bima.DataAccess.Identity;
 
+#nullable disable
+
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
     public partial class v12Context : IdentityDbContext<ApplicationUser>
@@ -16,24 +18,29 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
             : base(options)
         {
         }
-        public virtual DbSet<AspNetUsers> AspNetUsers { get; set; }
-        public virtual DbSet<AddressType> AddressType { get; set; }
-        public virtual DbSet<Area> Area { get; set; }       
-        public virtual DbSet<Bargain> Bargain { get; set; }
+
+        public virtual DbSet<AddressType> AddressTypes { get; set; }
+        public virtual DbSet<Area> Areas { get; set; }
+        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Buyer> Buyer { get; set; }
-        public virtual DbSet<BuyerAddress> BuyerAddress { get; set; }
+        public virtual DbSet<BuyerAddress> BuyerAddresses { get; set; }
+        public virtual DbSet<BuyerOrder> BuyerOrders { get; set; }
         public virtual DbSet<Company> Company { get; set; }
-        public virtual DbSet<Delivery> Delivery { get; set; }
+        public virtual DbSet<DeliveryOffer> DeliveryOffers { get; set; }
+        public virtual DbSet<DeliveryStatus> DeliveryStatuses { get; set; }
         public virtual DbSet<Driver> Driver { get; set; }
-        public virtual DbSet<LogViewer> LogViewer { get; set; }
-        public virtual DbSet<MobileLogger> MobileLogger { get; set; }
-        public virtual DbSet<OfferStatus> OfferStatus { get; set; }
-        public virtual DbSet<Offers> Offers { get; set; }
-        public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<ProductStatus> ProductStatus { get; set; }
+        public virtual DbSet<LogViewer> LogViewers { get; set; }
+        public virtual DbSet<MobileLogger> MobileLoggers { get; set; }
+        public virtual DbSet<Offer> Offers { get; set; }
+        public virtual DbSet<OfferStatus> OfferStatuses { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<Produce> Produce { get; set; }
+        public virtual DbSet<ProduceBuyer> ProduceBuyers { get; set; }
+        public virtual DbSet<ProductStatus> ProductStatuses { get; set; }
         public virtual DbSet<Seller> Seller { get; set; }
-        public virtual DbSet<SellerAddress> SellerAddress { get; set; }
-        public virtual DbSet<Settings> Settings { get; set; }
+        public virtual DbSet<SellerAddress> SellerAddresses { get; set; }
+        public virtual DbSet<Setting> Settings { get; set; }
+        public virtual DbSet<Unit> Unit { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -45,7 +52,7 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);            
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

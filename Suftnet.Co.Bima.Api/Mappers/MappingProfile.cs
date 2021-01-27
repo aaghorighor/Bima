@@ -23,10 +23,13 @@
             this.CreateMap<CompanyDto, Company>();
             this.CreateMap<Company, CompanyDto>().ForMember(x => x.Area, map => map.MapFrom(j => j.Area.Name)).ForMember(x=>x.AreaId, map=>map.Ignore());
 
-            this.CreateMap<Seller, SellerDto>().ForMember(x => x.Company, map => map.MapFrom(j => j.Company.Name));
+            this.CreateMap<Seller, SellerDto>();
             this.CreateMap<Buyer, BuyerDto>().ForMember(x => x.Company, map => map.MapFrom(j => j.Company.Name));
             this.CreateMap<Driver, DriverDto>().ForMember(x => x.Company, map => map.MapFrom(j => j.Company.Name));
-           
+
+            this.CreateMap<Produce, ProduceDto>().ForMember(x => x.Unit, map => map.MapFrom(j => j.Unit.Name));
+            this.CreateMap<ProduceDto, Produce>();
+            this.CreateMap<UpdateProduce, Produce>();
         }        
         
     }

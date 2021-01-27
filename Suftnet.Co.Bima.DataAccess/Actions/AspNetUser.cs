@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+#nullable disable
+
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
-    public partial class AspNetUsers
+    public partial class AspNetUser
     {
-        public AspNetUsers()
-        {        
+        public AspNetUser()
+        {
             Driver = new HashSet<Driver>();
             Seller = new HashSet<Seller>();
             Buyer = new HashSet<Buyer>();
@@ -44,5 +46,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public virtual ICollection<Buyer> Buyer { get; set; }
         public virtual ICollection<Driver> Driver { get; set; }
         public virtual ICollection<Seller> Seller { get; set; }
+
     }
 }

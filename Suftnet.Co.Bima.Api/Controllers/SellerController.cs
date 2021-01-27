@@ -25,8 +25,9 @@
         private readonly IMapper _mapper;
         private readonly IRepository<Seller> _seller;
         private readonly IJwtFactory _jwtFactory;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SellerController(UserManager<ApplicationUser> userManager,
+        public SellerController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork,
             IMapper mapper, IRepository<Seller> seller, IJwtFactory jwtFactory,
            IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
@@ -34,6 +35,7 @@
             _mapper = mapper;
             _seller = seller;
             _jwtFactory = jwtFactory;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -47,7 +49,7 @@
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {           
-            var sellers = await _seller.AllIncludingAsync(x => x.Company);
+            var sellers = await _seller.AllIncludingAsync();
             var model = _mapper.Map<List<SellerDto>>(sellers);
 
             return Ok(model);
@@ -81,15 +83,16 @@
 
             var seller = _mapper.Map<Seller>(model);
 
-            seller.Id = new Guid();
+            seller.Id = Guid.NewGuid();
             seller.UserId = user.Id;
             seller.CreatedAt = DateTime.UtcNow;
             seller.CreatedBy = model.Email;
 
-           _seller.Add(seller);
+            _seller.Add(seller);
+            _unitOfWork.SaveChanges();
 
             var jwt = await _jwtFactory.GenerateEncodedToken(model.Email, _jwtFactory.GenerateClaimsIdentity(user));
-            return new OkObjectResult(new { token = jwt, userName = model.FirstName + " " + model.LastName });
+            return new OkObjectResult(new { token = jwt, id = seller.Id,  userName = model.FirstName + " " + model.LastName });
         }
 
     }

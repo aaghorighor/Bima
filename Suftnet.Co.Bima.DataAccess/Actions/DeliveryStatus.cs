@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+
+#nullable disable
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
-    public partial class Delivery
+    public partial class DeliveryStatus
     {
+        public DeliveryStatus()
+        {
+            DeliveryOffers = new HashSet<DeliveryOffer>();
+        }
+
         public Guid Id { get; set; }
         public Guid OfferId { get; set; }
         public Guid CompanyId { get; set; }
@@ -14,12 +19,10 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         public string Note { get; set; }
-        [Column(TypeName = "timestamp")]
-        [MaxLength(8)]
-        [Timestamp]
         public byte[] TimeStamp { get; set; }
 
         public virtual Company Company { get; set; }
-        public virtual Offers Offer { get; set; }
+        public virtual Offer Offer { get; set; }
+        public virtual ICollection<DeliveryOffer> DeliveryOffers { get; set; }
     }
 }

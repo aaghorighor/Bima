@@ -80,8 +80,7 @@ return (
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>CreatedAt</TableCell>
-                <TableCell>Company</TableCell>
+                <TableCell>CreatedAt</TableCell>              
                 <TableCell>FirstName</TableCell>
                 <TableCell>LastName</TableCell>          
                 <TableCell>Email</TableCell>    
@@ -95,10 +94,7 @@ return (
                 <TableRow key={row.id}>
                   <TableCell component="th" scope="row">
                     {row.createdAt}
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.company}
-                  </TableCell>       
+                  </TableCell>                  
                   <TableCell component="th" scope="row">
                     {row.firstName}
                   </TableCell>       

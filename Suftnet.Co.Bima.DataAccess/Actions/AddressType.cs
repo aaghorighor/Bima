@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+
+#nullable disable
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
@@ -9,8 +9,8 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
     {
         public AddressType()
         {
-            BuyerAddress = new HashSet<BuyerAddress>();
-            SellerAddress = new HashSet<SellerAddress>();
+            BuyerAddresses = new HashSet<BuyerAddress>();
+            SellerAddresses = new HashSet<SellerAddress>();
         }
 
         public string Name { get; set; }
@@ -18,14 +18,11 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public DateTime CreatedDt { get; set; }
         public string CreatedBy { get; set; }
         public int IndexNo { get; set; }
-        [Column(TypeName = "timestamp")]
-        [MaxLength(8)]
-        [Timestamp]
         public byte[] TimeStamp { get; set; }
         public Guid Id { get; set; }
         public bool Active { get; set; }
 
-        public virtual ICollection<BuyerAddress> BuyerAddress { get; set; }
-        public virtual ICollection<SellerAddress> SellerAddress { get; set; }
+        public virtual ICollection<BuyerAddress> BuyerAddresses { get; set; }
+        public virtual ICollection<SellerAddress> SellerAddresses { get; set; }
     }
 }

@@ -5,8 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Actions_\**" />
     <Compile Remove="Action\**" />
+    <EmbeddedResource Remove="Actions_\**" />
     <EmbeddedResource Remove="Action\**" />
+    <None Remove="Actions_\**" />
     <None Remove="Action\**" />
   </ItemGroup>
 

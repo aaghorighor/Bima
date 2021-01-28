@@ -10,6 +10,8 @@
         public MappingProfile()
         {
             this.CreateMap<ApplicationUser, UserDto>().ForMember(x => x.Description, map => map.Ignore()).ForMember(x => x.Password, map => map.Ignore()).ForMember(x=>x.Active, map=>map.MapFrom(j=>j.IsEnabled));
+            this.CreateMap<CreateSeller, ApplicationUser>().ForMember(x => x.IsEnabled, map => map.MapFrom(j => j.Active)).ForMember(x => x.UserName, map => map.MapFrom(j => j.Email));
+
             this.CreateMap<CreateSeller, Seller>();
             this.CreateMap<CreateDriver, Driver>();
             this.CreateMap<CreateBuyer, Buyer>();

@@ -69,17 +69,19 @@
             if (email != null)
             {
                 return BadRequest(new { message = ModelStateError.AddErrorToModelState(StatusCodes.Status400BadRequest.ToString(), ValidationError.EMAIL_FOUND, ModelState) });              
-            }          
-         
+            }
+
             var user = _mapper.Map<ApplicationUser>(model);
             user.Id = Guid.NewGuid().ToString();
             user.UserType = UserType.BUYER;
+            user.CreatedAt = DateTime.UtcNow;
+            user.IsEnabled = model.Active;
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
-                return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });               
-            }         
+                return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });
+            }
 
             var buyer = _mapper.Map<Buyer>(model);
           
@@ -93,7 +95,18 @@
 
             var jwt = await _jwtFactory.GenerateEncodedToken(model.Email, _jwtFactory.GenerateClaimsIdentity(user));
 
-            return new OkObjectResult(new { token = jwt, id = buyer.Id, userName = model.FirstName + " " + model.LastName });
+            var _model = new
+            {
+                user = new
+                {
+                    id = user.Id,
+                    userName = user.FullName,
+                    userType = user.UserType,
+                    token = jwt
+                }
+            };
+
+            return new OkObjectResult(_model);
         }
        
     }

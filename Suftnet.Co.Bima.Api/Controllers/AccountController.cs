@@ -57,9 +57,10 @@
             var model = new { 
                 user = new
                 {
+                    id= user.Id,
                     userName = user.FullName,
                     userType= user.UserType,
-                    jwt = jwt
+                    token = jwt
                 }            
             };
             return new OkObjectResult(model);

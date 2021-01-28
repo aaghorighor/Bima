@@ -60,18 +60,18 @@
             }
 
             model.Password = Constants.DefaultPassword;
-            var identity = _mapper.Map<ApplicationUser>(model);
-            identity.Id = Guid.NewGuid().ToString();
-            identity.CreatedAt = DateTime.UtcNow;
-            identity.IsEnabled = model.Active;
-            var result = await _userManager.CreateAsync(identity, model.Password);
+            var user = _mapper.Map<ApplicationUser>(model);
+            user.Id = Guid.NewGuid().ToString();
+            user.CreatedAt = DateTime.UtcNow;
+            user.IsEnabled = model.Active;
+            var result = await _userManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
                 return BadRequest(new { message = ValidationError.EMAIL_FOUND });
             }
 
-            var newUser = _mapper.Map<UserDto>(identity);
+            var newUser = _mapper.Map<UserDto>(user);
 
             return new OkObjectResult(newUser);
         }

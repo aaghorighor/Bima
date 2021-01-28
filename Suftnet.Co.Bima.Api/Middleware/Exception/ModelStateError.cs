@@ -2,23 +2,39 @@
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-  
+    using Microsoft.Extensions.Logging;
+    using Suftnet.Co.Bima.Core;
+    using System.Text;
+
     public class ModelStateError
     {
-        public static ModelStateDictionary AddErrorsToModelState(IdentityResult identityResult, ModelStateDictionary modelState)
+        public static string AddErrorsToModelState(IdentityResult identityResult, ModelStateDictionary modelState)
         {
+            var builder = new StringBuilder();
+            
             foreach (var e in identityResult.Errors)
             {
                 modelState.TryAddModelError(e.Code, e.Description);
+              
+                builder.AppendLine("Description " + e.Description);
             }
 
-            return modelState;
+            EngineContext.Current.Resolve<ILogger<ModelStateDictionary>>().LogError(builder.ToString());
+
+            return builder.ToString();
         }
 
-        public static ModelStateDictionary AddErrorToModelState(string code, string description, ModelStateDictionary modelState)
+        public static string AddErrorToModelState(string code, string description, ModelStateDictionary modelState)
         {
+            var builder = new StringBuilder();
+
             modelState.TryAddModelError(code, description);
-            return modelState;
+          
+            builder.AppendLine("Description " + description);
+
+            EngineContext.Current.Resolve<ILogger<ModelStateDictionary>>().LogError(builder.ToString());
+
+            return builder.ToString();
         }       
     }
 }

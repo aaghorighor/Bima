@@ -7,19 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
+    [Table("Produce")]
     public partial class Produce
-    {
-        public Produce()
-        {
-            Offers = new HashSet<Offer>();
-            ProduceBuyers = new HashSet<ProduceBuyer>();
-        }
-
+    {      
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public double Quantity { get; set; }
-        public decimal Price { get; set; }  
+        public decimal Price { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
         [Column(TypeName = "timestamp")]
@@ -28,10 +23,14 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public byte[] TimeStamp { get; set; }
         public DateTime AvailableDate { get; set; }
         public Guid UnitId { get; set; }
-        public bool Active { get; set; }
-        [ForeignKey("UnitId")]
-        public Unit Unit { get; set; }
-        public virtual ICollection<Offer> Offers { get; set; }
-        public virtual ICollection<ProduceBuyer> ProduceBuyers { get; set; }
+        public bool Active { get; set; }      
+        public virtual Unit Unit { get; set; }      
+        public Guid SellerId { get; set; }
+        [ForeignKey("SellerId")]
+        public virtual Seller Seller { get; set; }     
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Country { get; set; }
     }
 }

@@ -5,15 +5,14 @@ using System.Collections.Generic;
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
 {
-    public partial class ProduceBuyer
+    public partial class Delivery
     {
         public Guid Id { get; set; }
-        public Guid BuyerId { get; set; }
-        public Guid ProduceId { get; set; }
+        public Guid LogisticId { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
+        public Guid ProduceId { get; set; }
 
-        public virtual Buyer Buyer { get; set; }
-        public virtual Produce Produce { get; set; }
+        public virtual Company Logistic { get; set; }
     }
 }

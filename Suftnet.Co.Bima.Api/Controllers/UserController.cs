@@ -105,7 +105,7 @@
                 return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });
             }
 
-            return new OkObjectResult(true);
+            return Ok(true);
         }
 
         [HttpPost]
@@ -131,7 +131,7 @@
                 return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });
             }
 
-            return new OkObjectResult(true);
+            return Ok(true);
         }
 
         [HttpPost]
@@ -164,7 +164,7 @@
                 return BadRequest(new { message = ModelStateError.AddErrorsToModelState(result, ModelState) });
             }
 
-            return new OkObjectResult(true);
+            return Ok(true);
         }
         
     }

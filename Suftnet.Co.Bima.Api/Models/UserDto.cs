@@ -37,12 +37,12 @@
 
     public class CreateBuyer : UserDto
     {
-        public Guid CompanyId { get; set; }
+     
     }
 
     public class CreateDriver : UserDto
     {
-        public Guid CompanyId { get; set; }
+     
     }
 
     public class UpdateUser

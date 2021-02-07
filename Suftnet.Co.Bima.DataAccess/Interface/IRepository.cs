@@ -9,6 +9,7 @@
     {
         IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
         Task<IEnumerable<T>> AllIncludingAsync(params Expression<Func<T, object>>[] includeProperties);
+        Task<IEnumerable<T>> AllIncludingAsync(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
         IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();       
         T GetSingle(Expression<Func<T, bool>> predicate);

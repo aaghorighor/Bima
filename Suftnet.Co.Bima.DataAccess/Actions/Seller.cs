@@ -9,11 +9,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
 {
     public partial class Seller
     {
-        public Seller()
-        {
-            BuyerOrders = new HashSet<BuyerOrder>();
-        }
-
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -28,9 +23,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }
-
-        public virtual AspNetUser User { get; set; }
-        public virtual ICollection<BuyerOrder> BuyerOrders { get; set; }
+        public string UserId { get; set; }     
     }
 }

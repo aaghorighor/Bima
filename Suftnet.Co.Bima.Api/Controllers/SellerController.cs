@@ -16,8 +16,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Suftnet.Co.Bima.Core;
-    using Microsoft.Extensions.Logging;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("api/[controller]")]
     public class SellerController : BaseController
@@ -26,16 +25,18 @@
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IRepository<Seller> _seller;
+        private readonly IRepository<Order> _order;
         private readonly IJwtFactory _jwtFactory;
         private readonly IUnitOfWork _unitOfWork;
 
         public SellerController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork,
-            IMapper mapper, IRepository<Seller> seller, IJwtFactory jwtFactory,
+            IMapper mapper, IRepository<Seller> seller, IJwtFactory jwtFactory, IRepository<Order> order,
            IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _userManager = userManager;
             _mapper = mapper;
             _seller = seller;
+            _order = order;
             _jwtFactory = jwtFactory;
             _unitOfWork = unitOfWork;
         }
@@ -47,12 +48,35 @@
             return Ok(await Task.Run(() => DateTime.UtcNow));
         }
 
+        [Authorize()]
         [HttpGet]
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {           
             var sellers = await _seller.AllIncludingAsync();
             var model = _mapper.Map<List<SellerDto>>(sellers);
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("sellerPendingOrders")]
+        public async Task<IActionResult> SellerPendingOrders()
+        {
+            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Produce), (x => x.Produce.Unit), (x => x.OrderStatus), (x => x.Buyer));
+            var model = _mapper.Map<List<SellerOrder>>(orders);
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("sellerCompletedOrders")]
+        public async Task<IActionResult> SellerCompletedOrders()
+        {
+            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Produce), (x => x.Produce.Unit), (x => x.OrderStatus), (x => x.Buyer));
+            var model = _mapper.Map<List<SellerOrder>>(orders);
 
             return Ok(model);
         }
@@ -100,13 +124,10 @@
 
             var _model = new
             {
-                user = new
-                {
-                    id = user.Id,
-                    userName = user.FullName,
-                    userType = user.UserType,
-                    token = jwt
-                }
+                id = user.Id,
+                userName = user.FullName,
+                userType = user.UserType,
+                token = jwt
             };
 
             return new OkObjectResult(_model);

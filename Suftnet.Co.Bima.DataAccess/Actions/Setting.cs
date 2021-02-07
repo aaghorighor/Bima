@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -19,6 +21,9 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public string Description { get; set; }
         public string ServerEmail { get; set; }
         public decimal? TaxRate { get; set; }
+        [Column(TypeName = "timestamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
     }
 }

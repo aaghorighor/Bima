@@ -7,16 +7,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 #nullable disable
 
 namespace Suftnet.Co.Bima.DataAccess.Actions
-{
+{   
     public partial class AspNetUser
-    {
-        public AspNetUser()
-        {
-            Driver = new HashSet<Driver>();
-            Seller = new HashSet<Seller>();
-            Buyer = new HashSet<Buyer>();
-        }
-
+    {       
         [Key]
         [ForeignKey("ApplicationUser")]
         public string Id { get; set; }
@@ -42,10 +35,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public string NormalizedUserName { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; }
         public string ConcurrencyStamp { get; set; }
-        public virtual ApplicationUser ApplicationUser { get; set; }
-        public virtual ICollection<Buyer> Buyer { get; set; }
-        public virtual ICollection<Driver> Driver { get; set; }
-        public virtual ICollection<Seller> Seller { get; set; }
-
+        public virtual ApplicationUser ApplicationUser { get; set; }        
     }
 }

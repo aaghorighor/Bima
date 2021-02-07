@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -10,11 +12,7 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public Company()
         {
             BuyerAddresses = new HashSet<BuyerAddress>();
-            Buyers = new HashSet<Buyer>();
-            DeliveryOffers = new HashSet<DeliveryOffer>();
-            DeliveryStatuses = new HashSet<DeliveryStatus>();
-            Drivers = new HashSet<Driver>();
-            Offers = new HashSet<Offer>();
+            Deliveries = new HashSet<Delivery>();
             SellerAddresses = new HashSet<SellerAddress>();
         }
 
@@ -27,15 +25,14 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public bool Active { get; set; }
         public DateTime CreatedAt { get; set; }
         public string CreatedBy { get; set; }
+        [Column(TypeName = "timestamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
 
         public virtual Area Area { get; set; }
         public virtual ICollection<BuyerAddress> BuyerAddresses { get; set; }
-        public virtual ICollection<Buyer> Buyers { get; set; }
-        public virtual ICollection<DeliveryOffer> DeliveryOffers { get; set; }
-        public virtual ICollection<DeliveryStatus> DeliveryStatuses { get; set; }
-        public virtual ICollection<Driver> Drivers { get; set; }
-        public virtual ICollection<Offer> Offers { get; set; }
+        public virtual ICollection<Delivery> Deliveries { get; set; }
         public virtual ICollection<SellerAddress> SellerAddresses { get; set; }
     }
 }

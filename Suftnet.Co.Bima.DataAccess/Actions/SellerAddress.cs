@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 #nullable disable
 
@@ -20,6 +22,9 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public string County { get; set; }
         public string CompleteAddress { get; set; }
         public string Town { get; set; }
+        [Column(TypeName = "timestamp")]
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
         public Guid Id { get; set; }
         public Guid CompanyId { get; set; }

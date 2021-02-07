@@ -7,6 +7,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
+    //[Table("AspNetUser")]
     public class ApplicationUser : IdentityUser
     {       
         [DataType(DataType.DateTime)]
@@ -26,6 +27,6 @@
             }
         }
     
-        public virtual AspNetUser AspNetUsers { get; set; }
+        ///public virtual AspNetUser AspNetUser { get; set; }
     }
 }

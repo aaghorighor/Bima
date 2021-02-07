@@ -23,10 +23,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }
-        public Guid CompanyId { get; set; }
-
-        public virtual Company Company { get; set; }
-        public virtual AspNetUser User { get; set; }
+        public string UserId { get; set; }      
     }
 }

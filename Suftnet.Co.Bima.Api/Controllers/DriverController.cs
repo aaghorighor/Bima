@@ -17,6 +17,7 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
 
+  
     [Route("api/[controller]")]
     public class DriverController : BaseController
 
@@ -49,7 +50,7 @@
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {          
-            var drivers = await _driver.AllIncludingAsync(x => x.Company);
+            var drivers = await _driver.AllIncludingAsync();
             var model = _mapper.Map<List<DriverDto>>(drivers);
 
             return Ok(model);
@@ -96,13 +97,10 @@
             var jwt = await _jwtFactory.GenerateEncodedToken(model.Email, _jwtFactory.GenerateClaimsIdentity(user));
             var _model = new
             {
-                user = new
-                {
-                    id = user.Id,
-                    userName = user.FullName,
-                    userType = user.UserType,
-                    token = jwt
-                }
+                id = user.Id,
+                userName = user.FullName,
+                userType = user.UserType,
+                token = jwt
             };
 
             return new OkObjectResult(_model);

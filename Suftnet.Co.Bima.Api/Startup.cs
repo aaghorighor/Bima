@@ -17,6 +17,7 @@
     using Microsoft.Net.Http.Headers;
     using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+    using Suftnet.Co.Bima.DataAccess.Identity;
 
     public class Startup
     {
@@ -45,8 +46,18 @@
 
             services.AddAuthorization(options =>
             {
-                options.AddPolicy("admin", policy => policy.RequireClaim(JwtClaimIdentifiers.USER_NAME));
+                options.AddPolicy("admin", policy => policy.RequireClaim(JwtClaimIdentifiers.USER_NAME, JwtClaimIdentifiers.USER_ID));
                 options.AddPolicy("restricted", policy => policy.RequireClaim(JwtClaimIdentifiers.USER_ID));
+            });
+
+            services.AddIdentityCore<ApplicationUser>(o =>
+            {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
             });
 
             services.AddSpaStaticFiles(configuration =>
@@ -60,9 +71,7 @@
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.Cors();
-            app.UseSecurityHeadersMiddleware(
-                new SecurityHeadersBuilder()
-                    .AddDefaultSecurePolicy());
+            app.UseSecurityHeadersMiddleware(new SecurityHeadersBuilder().AddDefaultSecurePolicy());
             app.UseHttpStatusCodeExceptionMiddleware();
             app.UseRouting();
             app.UseAuthentication();

@@ -54,16 +54,14 @@
             }
 
             var jwt = await _jwtFactory.GenerateEncodedToken(loginModel.UserName, identity);
-            var model = new { 
-                user = new
-                {
-                    id= user.Id,
-                    userName = user.FullName,
-                    userType= user.UserType,
-                    token = jwt
-                }            
+            var _model = new
+            {
+                id = user.Id,
+                userName = user.FullName,
+                userType = user.UserType,
+                token = jwt
             };
-            return new OkObjectResult(model);
+            return new OkObjectResult(_model);
         }
 
         #region private 

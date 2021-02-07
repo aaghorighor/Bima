@@ -100,7 +100,7 @@
 
                 if (!_context.Buyer.Any())
                 {
-                    var buyer = new Buyer { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "621a117b-ef3d-4018-a371-b75f65333e5b", CompanyId = new Guid("327C28FB-01D0-4FBF-4125-08D8B7E74690"), FirstName = "Buyer", LastName = "Buyer", Email = "buyer@v12.com", PhoneNumber = "0123456789", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
+                    var buyer = new Buyer { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "621a117b-ef3d-4018-a371-b75f65333e5b", FirstName = "Buyer", LastName = "Buyer", Email = "buyer@v12.com", PhoneNumber = "0123456789", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
                     buyer.Id = Guid.NewGuid();
                    _buyer.Add(buyer);
                  
@@ -115,7 +115,7 @@
 
                 if (!_context.Driver.Any())
                 {
-                    var logistic = new Driver { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "586dc4fc-5acc-464a-af53-35ce5deebb08", CompanyId = new Guid("E8C605BA-EC52-467F-4127-08D8B7E74690"), FirstName = "Logistic", LastName = "Logistic", Email = "logistic@v12.com", PhoneNumber = "012345678SSS9", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
+                    var logistic = new Driver { Description = "industry. Lorem Ipsum has been the industry's standard dummy", Active = true, ImageUrl = "", UserId = "586dc4fc-5acc-464a-af53-35ce5deebb08",FirstName = "Logistic", LastName = "Logistic", Email = "logistic@v12.com", PhoneNumber = "012345678SSS9", CreatedAt = DateTime.Now, CreatedBy = "Tester@Tester" };
                     logistic.Id = Guid.NewGuid();
                    _logistic.Add(logistic);
                  

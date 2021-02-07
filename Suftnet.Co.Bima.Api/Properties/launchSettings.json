@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/Suftnet.Co.Bima.Api",
+      "applicationUrl": "http://localhost:8082/v12",
       "sslPort": 0
     },
     "iisExpress": {
@@ -21,7 +21,8 @@
       }
     },
     "Bgl.Rating.Engine.Api": {
-      "commandName": "Project",
+      "commandName": "IIS",
+      "workingDirectory": "E:\\Git\\Web\\Bima\\Bima\\Bima\\Suftnet.Co.Bima.Api",
       "launchBrowser": true,
       "launchUrl": "api/values",
       "environmentVariables": {

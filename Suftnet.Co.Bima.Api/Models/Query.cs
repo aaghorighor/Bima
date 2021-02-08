@@ -18,4 +18,14 @@
         [Required]
         public string Id { get; set; }
     }
+
+    public class UpdateStatus
+    {
+        [Required]
+        public string OrderId { get; set; }
+
+        [Required]
+        public string StatusId { get; set; }
+    }
+
 }

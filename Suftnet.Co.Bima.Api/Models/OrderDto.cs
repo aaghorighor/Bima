@@ -63,4 +63,18 @@
         public string PhoneNumber { get; set; }
         public string Contact { get; set; }
     }
+
+    public class DriverOrder : OrderDto
+    {
+        public string ItemName { get; set; }
+        public string AvailableDate { get; set; }
+        public string Status { get; set; }
+        public string StatusId { get; set; }
+        public string CollectionAddress { get; set; }
+        public string DeliveryAddress { get; set; }
+        public decimal Quantity { get; set; }
+        public string Unit { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Contact { get; set; }
+    }
 }

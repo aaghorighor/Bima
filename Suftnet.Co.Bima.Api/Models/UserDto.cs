@@ -78,4 +78,12 @@
         [Required]
         public string Password { get; set; }
     }
+
+    public class DeliveryDto 
+    {
+        [Required]   
+        public Guid DriverId { get; set; }
+        [Required]
+        public Guid OrderId { get; set; }
+    }
 }

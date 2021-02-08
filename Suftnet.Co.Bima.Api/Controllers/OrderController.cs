@@ -51,11 +51,43 @@
             var model = _mapper.Map<List<OrderDto>>(orders);
 
             return Ok(model);
-        }             
+        }
+
+        [HttpPost]
+        [Route("updateOrderStatus")]
+
+        public IActionResult UpdateOrderStatus([FromBody] UpdateStatus param)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState.Errors() });
+            }
+
+            switch(param.StatusId.ToUpper())
+            {
+                case eOrderStatus.Completed:
+                    UpdateOrderStatus(new Guid(eOrderStatus.Completed), new Guid(param.OrderId));
+                    break;
+
+                case eOrderStatus.Pending:
+                    UpdateOrderStatus(new Guid(eOrderStatus.Processing), new Guid(param.OrderId));
+                    break;
+
+                case eOrderStatus.Processing:
+                    UpdateOrderStatus(new Guid(eOrderStatus.Delivery), new Guid(param.OrderId));
+                    break;
+
+                case eOrderStatus.Delivery:
+                    UpdateOrderStatus(new Guid(eOrderStatus.Completed), new Guid(param.OrderId));
+                    break;
+            }
+
+            return Ok(true);
+
+        }
 
         [HttpPost]
         [Route("create")]
-
         public IActionResult Create([FromBody]CreateOrder model)
         {
             if (!ModelState.IsValid)
@@ -80,19 +112,26 @@
             order.PaymentStatusId = new Guid(ePaymentStatus.Paid);           
 
            _order.Add(order);
-            ResetStatus(order.ProduceId);               
+            UpdateItemStatus(order.ProduceId);               
 
             return Ok(true);
         }
-
         #region private function
-        private void ResetStatus(Guid produceId)
+        private void UpdateItemStatus(Guid produceId)
         {
             var produce = _produce.GetSingle(x => x.Id == produceId);
             produce.Active = false;
            _produce.Edit(produce);
            _unitOfWork.SaveChanges();
         }
+        private void UpdateOrderStatus(Guid orderStatusId, Guid orderId)
+        {
+             var order = _order.GetSingle(x => x.Id == orderId);
+             order.OrderStatusId = orderStatusId;
+            _order.Edit(order);
+            _unitOfWork.SaveChanges();
+        }
+
         #endregion
     }
 }

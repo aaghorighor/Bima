@@ -17,12 +17,11 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [Column(TypeName = "timestamp")]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         [MaxLength(8)]
-        public byte[] TimeStamp { get; set; }
-        public string UserId { get; set; }
-        public int? UserLike { get; set; }
+        public byte[] TimeStamp { get; set; }      
         public Guid Id { get; set; }
         public Guid QuestionId { get; set; }
-
         public virtual Question Question { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace Suftnet.Co.Bima.Api.Controllers
 {
     using AutoMapper;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,15 @@
     using Suftnet.Co.Bima.Api.Infrastructure;
     using Suftnet.Co.Bima.Api.Models;
     using Suftnet.Co.Bima.Common;
+    using Suftnet.Co.Bima.DataAccess.Actions;
     using Suftnet.Co.Bima.DataAccess.Identity;
     using Suftnet.Co.Bima.DataAccess.Interface;
-    using Suftnet.Co.Bima.DataAccess.Actions;
 
     using System;
-    using System.Threading.Tasks;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-  
     [Route("api/[controller]")]
     public class DriverController : BaseController
 
@@ -25,16 +26,20 @@
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly IRepository<Driver> _driver;
+        private readonly IRepository<Delivery> _delivery;
+        private readonly IRepository<Order> _order;
         private readonly IJwtFactory _jwtFactory;
         private readonly IUnitOfWork _unitOfWork;
 
-        public DriverController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork,
-            IMapper mapper, IRepository<Driver> driver, IJwtFactory jwtFactory,
-           IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public DriverController(UserManager<ApplicationUser> userManager, IUnitOfWork unitOfWork, IRepository<Order> order,
+        IMapper mapper, IRepository<Driver> driver, IJwtFactory jwtFactory, IRepository<Delivery> delivery,
+        IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _userManager = userManager;
             _mapper = mapper;
             _driver = driver;
+            _delivery = delivery;
+            _order = order;
             _jwtFactory = jwtFactory;
             _unitOfWork = unitOfWork;
         }
@@ -49,11 +54,73 @@
         [HttpGet]
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
-        {          
+        {
             var drivers = await _driver.AllIncludingAsync();
             var model = _mapper.Map<List<DriverDto>>(drivers);
 
             return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("jobs")]
+        public async Task<IActionResult> Jobs()
+        {
+            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.Produce.Unit), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));           
+            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order));
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("fetchByOrderId")]
+        public async Task<IActionResult> FetchByOrderId([FromQuery] Param param)
+        {
+            var drivers = await _delivery.AllIncludingAsync(x=>x.OrderId == new Guid(param.Id),(x=>x.Driver));
+            var driver = drivers.FirstOrDefault();
+
+            if(driver == null)
+            {
+                return Ok(new DriverDto());
+            }
+
+            var model = _mapper.Map<DriverDto>(driver.Driver);
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpPost]
+        [Route("createDelivery")]
+        public IActionResult CreateDelivery([FromBody]DeliveryDto deliveryDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState.Errors() });
+            }
+
+            var delivery = _mapper.Map<Delivery>(deliveryDto);
+            var change = _delivery.GetSingle(x => x.OrderId == deliveryDto.OrderId);
+
+            if(change != null)
+            {
+                 change.DriverId = delivery.DriverId;
+                _delivery.Edit(change);
+            }
+            else
+            {
+                delivery.Id = Guid.NewGuid();
+                delivery.CreatedAt = DateTime.UtcNow;
+                delivery.CreatedBy = this.Username;
+
+               _delivery.Add(delivery);
+            }
+
+            updateOrderStatus(deliveryDto.OrderId);
+           _unitOfWork.SaveChanges();
+
+            return Ok(true);
         }
 
         [HttpPost]
@@ -104,6 +171,13 @@
             };
 
             return new OkObjectResult(_model);
+        }
+
+        private void updateOrderStatus(Guid orderId)
+        {
+            var model = _order.GetSingle(x => x.Id == orderId);
+            model.OrderStatusId = new Guid(eOrderStatus.Processing);
+           _order.Edit(model);
         }
 
     }

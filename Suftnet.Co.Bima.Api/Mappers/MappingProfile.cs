@@ -91,7 +91,26 @@
                 .ForMember(x => x.PhoneNumber, map => map.MapFrom(j => j.Buyer.PhoneNumber))
                 .ForMember(x => x.Contact, map => map.MapFrom(j => j.Buyer.FirstName + " " + j.Buyer.LastName))
                 .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
-        }        
+
+            this.CreateMap<DeliveryDto, Delivery>();
+
+            this.CreateMap<Order, DriverOrder>()
+               .ForMember(x => x.Status, map => map.MapFrom(j => j.OrderStatus.Name))
+               .ForMember(x => x.StatusId, map => map.MapFrom(j => j.OrderStatus.Id))
+               .ForMember(x => x.CollectionAddress, map => map.MapFrom(j => j.Produce.CollectionAddress()))
+               .ForMember(x => x.DeliveryAddress, map => map.MapFrom(j => j.DeliveryAddress()))
+               .ForMember(x => x.AvailableDate, map => map.MapFrom(j => j.Produce.AvailableDate))
+               .ForMember(x => x.Quantity, map => map.MapFrom(j => j.Produce.Quantity))
+               .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit.Name))
+               .ForMember(x => x.PhoneNumber, map => map.MapFrom(j => j.Produce.Seller.PhoneNumber))
+               .ForMember(x => x.Contact, map => map.MapFrom(j => j.Produce.Seller.FirstName + " " + j.Produce.Seller.LastName))
+               .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
+
+            this.CreateMap<CreateQuestionDto, Question>();
+            this.CreateMap<Question, QuestionDto>().ForMember(x => x.AnswerCount, map => map.MapFrom(j => j.Answers.Count));
+            this.CreateMap<CreateAnswerDto, Answer>();
+            this.CreateMap<Answer, AnswerDto>();
+        }             
         
     }
 }

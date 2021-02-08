@@ -31,7 +31,8 @@
                  claimsIdentity.FindFirst(JwtClaimIdentifiers.LAST_NAME),
                  claimsIdentity.FindFirst(JwtClaimIdentifiers.USER_ID),
                  claimsIdentity.FindFirst(JwtClaimIdentifiers.USER_NAME),
-                 claimsIdentity.FindFirst(JwtClaimIdentifiers.FULL_NAME)
+                 claimsIdentity.FindFirst(JwtClaimIdentifiers.FULL_NAME),
+                 claimsIdentity.FindFirst(JwtClaimIdentifiers.PHONE_NUMBER)
              };
                        
             var jwt = new JwtSecurityToken(
@@ -53,7 +54,8 @@
                 new Claim(JwtClaimIdentifiers.LAST_NAME, user.LastName),
                 new Claim(JwtClaimIdentifiers.USER_ID, user.Id),
                 new Claim(JwtClaimIdentifiers.USER_NAME, user.UserName),
-                new Claim(JwtClaimIdentifiers.FULL_NAME, user.FullName)
+                new Claim(JwtClaimIdentifiers.FULL_NAME, user.FullName),
+                new Claim(JwtClaimIdentifiers.PHONE_NUMBER, user.PhoneNumber)
 
             });
         }

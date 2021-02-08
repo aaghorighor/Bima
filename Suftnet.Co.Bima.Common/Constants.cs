@@ -17,7 +17,7 @@
 
     public static class JwtClaimIdentifiers
     {
-        public const string USER_ID = "UserId", USER_NAME = "UserName", FIRST_NAME ="FirstName", LAST_NAME ="LastName",  FULL_NAME ="FullName";
+        public const string USER_ID = "UserId", PHONE_NUMBER = "PhoneNumber", USER_NAME = "UserName", FIRST_NAME ="FirstName", LAST_NAME ="LastName",  FULL_NAME ="FullName";
     }
 
     public static class UserType
@@ -48,6 +48,7 @@
         public const string Pending = "ED9EB336-D246-4747-ADB1-42FD95D98E4C";
         public const string Completed = "BFF4A1B2-8D64-4919-A91D-4E96E61E1A5B";
         public const string Processing = "FFA01FE4-8B49-41E9-A630-70FD7E756ECC";
+        public const string Delivery = "3dbd5a6d-cf74-4343-9b51-b2446b6cdcf9";
     }
 
     public static class ePaymentStatus

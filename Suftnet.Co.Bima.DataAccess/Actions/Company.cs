@@ -11,9 +11,7 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
     {
         public Company()
         {
-            BuyerAddresses = new HashSet<BuyerAddress>();
-            Deliveries = new HashSet<Delivery>();
-            SellerAddresses = new HashSet<SellerAddress>();
+          
         }
 
         public Guid Id { get; set; }
@@ -30,9 +28,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
 
-        public virtual Area Area { get; set; }
-        public virtual ICollection<BuyerAddress> BuyerAddresses { get; set; }
-        public virtual ICollection<Delivery> Deliveries { get; set; }
-        public virtual ICollection<SellerAddress> SellerAddresses { get; set; }
+        public virtual Area Area { get; set; }       
     }
 }

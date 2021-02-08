@@ -38,6 +38,14 @@
             }
         }
 
+        public string PhoneNumber
+        {
+            get
+            {
+                return this.Claims.Where(x => x.Type == JwtClaimIdentifiers.PHONE_NUMBER).Select(x => x.Value).SingleOrDefault();
+            }
+        }
+
         public string UserId
         {
             get

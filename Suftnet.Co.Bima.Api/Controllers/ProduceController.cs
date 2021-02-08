@@ -61,7 +61,7 @@
 
             var seller = _seller.GetSingle(x => x.UserId == this.UserId);
 
-            if(seller != null)
+            if(seller == null)
             {
                 return BadRequest(new { message = ValidationError.SELLER_NOT_FOUND });
             }

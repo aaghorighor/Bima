@@ -15,7 +15,7 @@
     using System.Threading.Tasks;
     using System.Linq;
 
-    [Authorize()]
+   
     [Route("api/[controller]")]
     public class QuestionController : BaseController
 
@@ -40,6 +40,7 @@
             return Ok(await Task.Run(() => DateTime.UtcNow));
         }
 
+        [Authorize()]
         [HttpGet]     
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
@@ -50,6 +51,7 @@
             return Ok(model);
         }
 
+        [Authorize()]
         [HttpPost]
         [Route("create")]
         public IActionResult Create([FromBody]CreateQuestionDto model)

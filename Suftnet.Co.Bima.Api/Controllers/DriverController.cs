@@ -63,10 +63,21 @@
 
         [Authorize()]
         [HttpGet]
-        [Route("jobs")]
-        public async Task<IActionResult> Jobs()
+        [Route("pendingJobs")]
+        public async Task<IActionResult> PendingJobs()
         {
             var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.Produce.Unit), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));           
+            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order));
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("completedjobs")]
+        public async Task<IActionResult> Completedjobs()
+        {
+            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.Produce.Unit), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));
             var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order));
 
             return Ok(model);

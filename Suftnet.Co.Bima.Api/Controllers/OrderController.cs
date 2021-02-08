@@ -14,8 +14,7 @@
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
     using Suftnet.Co.Bima.Common;
-
-    [Authorize()]
+      
     [Route("api/[controller]")]
     public class OrderController : BaseController
     {    
@@ -53,6 +52,7 @@
             return Ok(model);
         }
 
+        [Authorize()]
         [HttpPost]
         [Route("updateOrderStatus")]
 
@@ -86,6 +86,7 @@
 
         }
 
+        [Authorize()]
         [HttpPost]
         [Route("create")]
         public IActionResult Create([FromBody]CreateOrder model)
@@ -97,7 +98,7 @@
 
             var buyer = _buyer.GetSingle(x => x.UserId == this.UserId);
 
-            if (buyer != null)
+            if (buyer == null)
             {
                 return BadRequest(new { message = ValidationError.BUYER_NOT_FOUND });
             }

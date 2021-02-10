@@ -12,7 +12,8 @@
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-      
+ 
+
     [Authorize()]
     [Route("api/[controller]")]
     public class ProduceController : BaseController
@@ -70,6 +71,7 @@
 
             produce.Id = Guid.NewGuid();
             produce.SellerId = seller.Id;
+            produce.AvailableDate = model.AvailableDate.ToDate();
             produce.CreatedAt = DateTime.UtcNow;
             produce.CreatedBy = this.Username;
 
@@ -97,7 +99,7 @@
 
             produce.Description = model.Description;
             produce.Active = model.Active;
-            produce.AvailableDate = model.AvailableDate;
+            produce.AvailableDate = model.AvailableDate.ToDate();
             produce.Name = model.Name;
             produce.Price = model.Price;
             produce.Quantity = (double)model.Quantity;

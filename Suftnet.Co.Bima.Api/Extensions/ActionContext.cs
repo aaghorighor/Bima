@@ -1,6 +1,7 @@
 ﻿namespace Suftnet.Co.Bima.Api.Extensions
 {
     using Suftnet.Co.Bima.DataAccess.Actions;
+    using System;
 
     public static class ActionContext
     {
@@ -71,5 +72,18 @@
 
             return address;
         }
+
+        public static DateTime ToDate(this string dateString)
+        {
+            DateTime dateTime;
+            if (DateTime.TryParse(dateString, out dateTime))
+            {
+                return dateTime;
+            }
+
+            return DateTime.UtcNow.Date;
+        }
+
+
     }
 }

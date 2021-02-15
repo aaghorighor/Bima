@@ -13,6 +13,7 @@
         public string Email { get; set; }
         public string ImageUrl { get; set; }     
         public string Description { get; set; }
-        public string Company { get; set; }
+        public string ShelfLife { get; set; }
+        public string Rejection { get; set; }
     }
 }

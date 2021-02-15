@@ -20,6 +20,7 @@ const loadingState =()=> {
 };
 
 const loadState = (drivers) =>{
+    drivers = drivers || [];
     return {
         type: actionType.LIST,
         drivers: drivers,

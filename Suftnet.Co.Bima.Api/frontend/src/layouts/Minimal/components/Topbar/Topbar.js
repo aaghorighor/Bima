@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar,IconButton } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import PublicRoundedIcon from '@material-ui/icons/PublicRounded';

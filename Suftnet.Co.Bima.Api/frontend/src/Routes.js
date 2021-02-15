@@ -12,6 +12,7 @@ import {
   Farmers as FarmersView,
   Buyers as BuyersView,
   Drivers as DriversView,
+  Orders as OrdersView,
   NotFound as NotFoundView
 } from './views';
 
@@ -58,6 +59,12 @@ const Routes = () => {
         exact
         layout={MainLayout}
         path="/drivers"
+      />     
+       <RouteLayout
+        component={OrdersView}
+        exact
+        layout={MainLayout}
+        path="/orders"
       />     
       <RouteLayout
         component={SignUpView}

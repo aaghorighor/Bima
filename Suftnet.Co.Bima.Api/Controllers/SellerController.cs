@@ -17,6 +17,7 @@
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using Microsoft.AspNetCore.Authorization;
+    using System.Linq;
 
     [Route("api/[controller]")]
     public class SellerController : BaseController
@@ -47,14 +48,25 @@
         {
             return Ok(await Task.Run(() => DateTime.UtcNow));
         }
-
-        [Authorize()]
+             
         [HttpGet]
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {           
             var sellers = await _seller.AllIncludingAsync();
-            var model = _mapper.Map<List<SellerDto>>(sellers);
+            var model = _mapper.Map<List<SellerDto>>(sellers.OrderByDescending(x => x.CreatedAt));
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("fetchByUser")]
+        public async Task<IActionResult> FetchByUser()
+        {
+            var sellers = await _seller.AllIncludingAsync(x=>x.UserId == this.UserId);
+            var seller = sellers.FirstOrDefault();
+            var model = _mapper.Map<SellerDto>(seller);
 
             return Ok(model);
         }
@@ -64,8 +76,8 @@
         [Route("sellerPendingOrders")]
         public async Task<IActionResult> SellerPendingOrders()
         {
-            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Produce), (x => x.Produce.Unit), (x => x.OrderStatus), (x => x.Buyer));
-            var model = _mapper.Map<List<SellerOrder>>(orders);
+            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Produce),(x => x.OrderStatus), (x => x.Buyer));
+            var model = _mapper.Map<List<SellerDto>>(orders.OrderByDescending(x => x.CreatedAt));
 
             return Ok(model);
         }
@@ -75,8 +87,8 @@
         [Route("sellerCompletedOrders")]
         public async Task<IActionResult> SellerCompletedOrders()
         {
-            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Produce), (x => x.Produce.Unit), (x => x.OrderStatus), (x => x.Buyer));
-            var model = _mapper.Map<List<SellerOrder>>(orders);
+            var orders = await _order.AllIncludingAsync(x => x.Produce.Seller.UserId == this.UserId && x.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Produce),(x => x.OrderStatus), (x => x.Buyer));
+            var model = _mapper.Map<List<SellerDto>>(orders.OrderByDescending(x => x.CreatedAt));
 
             return Ok(model);
         }
@@ -131,6 +143,33 @@
             };
 
             return new OkObjectResult(_model);
+        }
+
+        [Authorize()]
+        [HttpPost]
+        [Route("edit")]
+        public IActionResult Edit([FromBody] SellerDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState.Errors() });
+            }
+
+            var seller = _seller.GetSingle(x => x.UserId == this.UserId);
+
+            if (seller == null)
+            {
+                return BadRequest(new { message = ValidationError.SELLER_NOT_FOUND });
+            }           
+                      
+            seller.Size = model.Size;
+            seller.HarvestSize = model.HarvestSize;
+            seller.HarvestTime = model.HarvestTime;
+
+            _seller.Edit(seller);
+            _unitOfWork.SaveChanges();           
+
+            return Ok(true);
         }
 
     }

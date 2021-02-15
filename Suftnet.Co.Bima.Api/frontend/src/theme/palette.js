@@ -52,5 +52,5 @@ export default {
     paper: white
   },
   icon: colors.blueGrey[600],
-  divider: colors.grey[200]
+  divider: colors.grey[500]
 };

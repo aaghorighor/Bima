@@ -20,6 +20,8 @@ const loadingState =()=> {
 };
 
 const loadState = (buyers) =>{
+
+    buyers = buyers || [];
     return {
         type: actionType.LIST,
         buyers: buyers,
@@ -40,7 +42,7 @@ const errorState = error=> {
 export const load =(params) => {
   
     axios({ method: 'get', url: buyerUrl.fetch, data:params ,
-    config:  { headers: {  'Accept': 'application/json', 'Content-Type': 'application/json' }}
+    config:  { headers: {  'Accept': 'application/json', 'Content-Type': 'application/json', "Access-Control-Allow-Origin" : "*" }}
       }).then((json) => { params.dispatch(loadState(json.data)); }) 
       .catch(error => { if (error.response && error.response.data) {
        params.dispatch(errorState(error.response.data));

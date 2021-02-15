@@ -15,9 +15,8 @@
         public decimal Quantity { get; set; }
         [Required]
         public decimal Price { get; set; }
-        public bool Active { get; set; }       
+        public bool Active { get; set; }         
         [Required]
-        public Guid UnitId { get; set; }
         public string Unit { get; set; }
         [Required]
         public string AvailableDate { get; set; }

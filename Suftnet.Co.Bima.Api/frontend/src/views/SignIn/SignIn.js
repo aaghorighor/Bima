@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import validate from 'validate.js';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Grid,
   Button,
@@ -125,10 +125,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(2)
   },
   textField: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(4)
   },
   signInButton: {
-    margin: theme.spacing(2, 0)
+    margin: theme.spacing(4, 0)
   }
 }));
 
@@ -197,7 +197,7 @@ const SignIn = props => {
       history : history
     }
 
-    try{
+    try{   
       login(params); 
     }catch(error){
       console.log(error);

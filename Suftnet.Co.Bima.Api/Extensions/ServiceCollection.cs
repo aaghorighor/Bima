@@ -59,7 +59,13 @@
         public static void Cors(this IServiceCollection services)
         {
             services.AddCors(options =>
-                 options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
+                 options.AddPolicy("CorePolicy", builder =>
+                 {
+                     builder.AllowAnyOrigin()
+                            .AllowAnyMethod()
+                            .AllowAnyHeader();
+                 }));
+
         }
         public static void HttpContextAccessor(this IServiceCollection services)
         {

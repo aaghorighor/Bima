@@ -56,13 +56,13 @@
                 .ForMember(x => x.FirstName, map => map.MapFrom(j => j.Seller.FirstName))
                 .ForMember(x => x.LastName, map => map.MapFrom(j => j.Seller.LastName))
                 .ForMember(x => x.Email, map => map.MapFrom(j => j.Seller.Email))
-                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Unit.Name))
+                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Unit))
                 .ForMember(x=> x.AvailableDate, opts => opts.MapFrom(x=>x.AvailableDate.ToString("yyyy-MM-dd")));
             this.CreateMap<ProduceDto, Produce>();
             this.CreateMap<UpdateProduce, Produce>();
 
             this.CreateMap<Order, OrderDto>()
-                .ForMember(x => x.Total, map => map.MapFrom(j => j.AmountPaid))
+                .ForMember(x => x.Total, map => map.MapFrom(j => j.AmountPaid))                
                 .ForMember(x => x.Balance, map => map.MapFrom(j => j.AmountPaid));
             this.CreateMap<CreateOrder, Order>()
                 .ForMember(x => x.Total, map => map.MapFrom(j => j.AmountPaid))
@@ -76,7 +76,7 @@
                 .ForMember(x => x.DeliveryAddress, map => map.MapFrom(j => j.DeliveryAddress()))
                 .ForMember(x => x.AvailableDate, map => map.MapFrom(j => j.Produce.AvailableDate.ToString("yyyy-MM-dd")))
                 .ForMember(x => x.Quantity, map => map.MapFrom(j => j.Produce.Quantity))
-                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit.Name))
+                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit))
                 .ForMember(x => x.PhoneNumber, map => map.MapFrom(j => j.Produce.Seller.PhoneNumber))
                 .ForMember(x => x.Contact, map => map.MapFrom(j => j.Produce.Seller.FirstName + " " + j.Produce.Seller.LastName))
                 .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
@@ -88,13 +88,12 @@
                 .ForMember(x => x.DeliveryAddress, map => map.MapFrom(j => j.DeliveryAddress()))
                 .ForMember(x => x.AvailableDate, map => map.MapFrom(j => j.Produce.AvailableDate.ToString("yyyy-MM-dd")))
                 .ForMember(x => x.Quantity, map => map.MapFrom(j => j.Produce.Quantity))
-                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit.Name))
+                .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit))
                 .ForMember(x => x.PhoneNumber, map => map.MapFrom(j => j.Buyer.PhoneNumber))
                 .ForMember(x => x.Contact, map => map.MapFrom(j => j.Buyer.FirstName + " " + j.Buyer.LastName))
                 .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
 
             this.CreateMap<DeliveryDto, Delivery>();
-
             this.CreateMap<Order, DriverOrder>()
                .ForMember(x => x.Status, map => map.MapFrom(j => j.OrderStatus.Name))
                .ForMember(x => x.StatusId, map => map.MapFrom(j => j.OrderStatus.Id))
@@ -102,7 +101,7 @@
                .ForMember(x => x.DeliveryAddress, map => map.MapFrom(j => j.DeliveryAddress()))
                .ForMember(x => x.AvailableDate, map => map.MapFrom(j => j.Produce.AvailableDate.ToString("yyyy-MM-dd")))
                .ForMember(x => x.Quantity, map => map.MapFrom(j => j.Produce.Quantity))
-               .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit.Name))
+               .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit))
                .ForMember(x => x.PhoneNumber, map => map.MapFrom(j => j.Produce.Seller.PhoneNumber))
                .ForMember(x => x.Contact, map => map.MapFrom(j => j.Produce.Seller.FirstName + " " + j.Produce.Seller.LastName))
                .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
@@ -112,6 +111,17 @@
                 .ForMember(x => x.CreatedOn, map => map.MapFrom(j => j.CreatedDt.ToString("yyyy-MM-dd")));
             this.CreateMap<CreateAnswerDto, Answer>();
             this.CreateMap<Answer, AnswerDto>();
+            this.CreateMap<MobileLogDto, MobileLogger>();
+
+            this.CreateMap<Order, OrderReport>()
+               .ForMember(x => x.Id, map => map.MapFrom(j => j.Id.ToString().Substring(5)))
+               .ForMember(x => x.Status, map => map.MapFrom(j => j.OrderStatus.Name))             
+               .ForMember(x => x.OrderDate, map => map.MapFrom(j => j.CreatedAt.ToLongDateString()))
+               .ForMember(x => x.DeliveryDate, map => map.MapFrom(j => j.DeliveryDate.ToDeliveryDate()))
+               .ForMember(x => x.Quantity, map => map.MapFrom(j => j.Produce.Quantity))
+               .ForMember(x => x.Unit, map => map.MapFrom(j => j.Produce.Unit))              
+               .ForMember(x => x.Buyer, map => map.MapFrom(j => j.Buyer.FirstName + " " + j.Buyer.LastName))
+               .ForMember(x => x.ItemName, map => map.MapFrom(j => j.Produce.Name));
         }             
         
     }

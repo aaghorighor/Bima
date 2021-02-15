@@ -1,5 +1,5 @@
-export const host = "http://localhost:62137/api/";
-//export const host ="http://kcmkcm-001-site9.btempurl.com/api/"
+//export const host = "http://localhost:62137/api/";
+export const host ="http://kcmkcm-001-site9.btempurl.com/api/"
 //export const host = "http://localhost:62137/api/";
 
 // login
@@ -22,6 +22,10 @@ export const buyerUrl = {
 
 export const driverUrl = {
     fetch : host+"driver/fetch"
+}
+
+export const orderUrl = {
+    fetch : host+"order/fetch"
 }
 
 

@@ -35,5 +35,6 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public virtual Produce Produce { get; set; }
         [ForeignKey("BuyerId")]
         public virtual Buyer Buyer { get; set; }
+        public string DeliveryDate { get; set; }
     }
 }

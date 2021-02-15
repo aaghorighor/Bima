@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { AppBar, Toolbar, IconButton } from '@material-ui/core';
 import InputIcon from '@material-ui/icons/Input';
 import AccountCircle from '@material-ui/icons/AccountCircle';

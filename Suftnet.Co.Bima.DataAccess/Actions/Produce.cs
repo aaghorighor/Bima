@@ -22,9 +22,8 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
         public DateTime AvailableDate { get; set; }
-        public Guid UnitId { get; set; }
-        public bool Active { get; set; }      
-        public virtual Unit Unit { get; set; }      
+        public string Unit { get; set; }
+        public bool Active { get; set; }              
         public Guid SellerId { get; set; }
         [ForeignKey("SellerId")]
         public virtual Seller Seller { get; set; }     

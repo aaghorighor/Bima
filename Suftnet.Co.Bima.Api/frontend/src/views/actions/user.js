@@ -20,6 +20,7 @@ const loadingState =()=> {
 };
 
 const addState = (user) =>{
+
     return {
         type: actionType.ADD,
         user: user,
@@ -37,6 +38,9 @@ const updateState = (user) =>{
 };
 
 const loadState = (users) =>{
+
+    users = users || [];
+
     return {
         type: actionType.LIST,
         users: users,

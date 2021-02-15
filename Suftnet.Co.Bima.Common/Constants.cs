@@ -13,6 +13,7 @@
         public const string PRODUCE_NOT_FOUND = "A match not found for your Produce Id";
         public const string SELLER_NOT_FOUND = "A match not found for this Farmer";
         public const string BUYER_NOT_FOUND = "A match not found for this Buyer";
+        public const string DRIVER_NOT_FOUND = "A match not found for this Transpoter";
     }
 
     public static class JwtClaimIdentifiers

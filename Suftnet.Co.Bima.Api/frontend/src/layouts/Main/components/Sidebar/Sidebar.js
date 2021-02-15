@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Drawer } from '@material-ui/core';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -9,6 +9,7 @@ import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import CommuteIcon from '@material-ui/icons/Commute';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 import ShoppingCartSharpIcon from '@material-ui/icons/ShoppingCartSharp';
+import GroupIcon from '@material-ui/icons/Group';
 import { List, ListItem, Button, colors } from '@material-ui/core';
 import { Profile, SidebarNav } from './components';
 
@@ -67,16 +68,16 @@ const Sidebar = props => {
   const { open, variant, onClose, className, ...rest } = props;
   const classes = useStyles();
 
-  const pages = [
+  const pages = [      
     {
-      title: 'Dashboard',
-      href: '/dashboard',
-      icon: <DashboardIcon />
-    },    
+      title: 'Orders',
+      href: '/orders',
+      icon: <ShoppingBasketIcon />
+    },  
     {
       title: 'Farmers',
       href: '/farmers',
-      icon: <ShoppingBasketIcon /> 
+      icon: <GroupIcon /> 
     }, 
     {
       title: 'Buyers',
@@ -87,7 +88,7 @@ const Sidebar = props => {
       title: 'Logistics',
       href: '/drivers',
       icon: <CommuteIcon />
-    },
+    },    
     {
       title: 'Users',
       href: '/users',
@@ -108,8 +109,9 @@ const Sidebar = props => {
         {...rest}
         className={clsx(classes.root, className)}
       >       
-        <Profile />
-        <Divider className={classes.divider}></Divider>
+        {/* <Profile /> */}
+        
+        {/* <Divider className={classes.divider}></Divider> */}
         <SidebarNav
           className={classes.nav}
           pages={pages}

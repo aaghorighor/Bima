@@ -39,6 +39,7 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         public virtual DbSet<SellerAddress> SellerAddress { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<Unit> Unit { get; set; }
+        public virtual DbSet<Logger> Logger { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

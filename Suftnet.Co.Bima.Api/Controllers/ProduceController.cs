@@ -4,15 +4,18 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+
     using Suftnet.Co.Bima.Api.Extensions;
     using Suftnet.Co.Bima.Api.Models;
     using Suftnet.Co.Bima.Common;
     using Suftnet.Co.Bima.DataAccess.Actions;
     using Suftnet.Co.Bima.DataAccess.Interface;
+
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
- 
+    using System.Linq;
+
 
     [Authorize()]
     [Route("api/[controller]")]
@@ -45,8 +48,8 @@
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {          
-            var produces = await _produce.AllIncludingAsync(x=>x.Seller.UserId == this.UserId,(x=>x.Unit));
-            var model = _mapper.Map<List<ProduceDto>>(produces);
+            var produces = await _produce.AllIncludingAsync(x=>x.Seller.UserId == this.UserId);
+            var model = _mapper.Map<List<ProduceDto>>(produces.OrderByDescending(x=>x.CreatedAt));
 
             return Ok(model);
         }
@@ -103,7 +106,7 @@
             produce.Name = model.Name;
             produce.Price = model.Price;
             produce.Quantity = (double)model.Quantity;
-            produce.UnitId = model.UnitId;
+            produce.Unit = model.Unit;
             produce.Address = model.Address;
             produce.City = model.City;
             produce.State = model.State;

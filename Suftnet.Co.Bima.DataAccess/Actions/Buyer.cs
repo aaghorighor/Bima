@@ -23,7 +23,9 @@ namespace Suftnet.Co.Bima.DataAccess.Actions
         [MaxLength(8)]
         public byte[] TimeStamp { get; set; }
         public string Description { get; set; }
-        public string UserId { get; set; }  
-     
+        public string UserId { get; set; }
+        public string ShelfLife { get; set; }
+        public string Rejection { get; set; }
+
     }
 }

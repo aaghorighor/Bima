@@ -54,7 +54,9 @@ export const login =(params) => {
   
     params.dispatch(inProgressState());
    
-    axios.post(loginUrl,{ "userName" : params.email, "password" : params.password}).then(json=>{
+    axios.post(loginUrl,{ "userName" : params.email, "password" : params.password,
+    config:  { headers: {  'Accept': 'application/json', 'Content-Type': 'application/json', "Access-Control-Allow-Origin" : "*" }}
+        }).then(json=>{        
         params.dispatch(successState(json.data));
         navigateTo(json.data,params.history);         
       
@@ -113,12 +115,15 @@ export const accountReducer = (state, action)=>
 
 const navigateTo = (response, history)=>
 {
-    const { userType } = response.user;
+    console.log(response);
+
+    const { userType } = response;
    
     switch(userType)
     {
-      case userTypes.BACK_OFFICE :        
-          history.push("/dashboard")
+      case userTypes.BACK_OFFICE :      
+   
+          history.push("/orders")
           break;
       case userTypes.CUSTOMER_OFFICE :
           break;

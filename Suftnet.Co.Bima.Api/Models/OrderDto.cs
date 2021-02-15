@@ -27,7 +27,7 @@
         public decimal Total { get; set; }
         public decimal Balance { get; set; }
         public string CreatedBy { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }        
 
     }
 
@@ -76,5 +76,18 @@
         public string Unit { get; set; }
         public string PhoneNumber { get; set; }
         public string Contact { get; set; }
+    }
+
+    public class OrderReport 
+    {
+        public string Id { get; set; }
+        public string Buyer { get; set; }
+        public string ItemName { get; set; }      
+        public string Status { get; set; }   
+        public decimal Quantity { get; set; }
+        public string Unit { get; set; }
+        public string OrderDate { get; set; }
+        public string DeliveryDate { get; set; }
+
     }
 }

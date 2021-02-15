@@ -2,7 +2,7 @@ import React, {useContext} from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Typography } from '@material-ui/core';
 import { identityContext } from '../../../../../../views/contexts/indentityProvider'
 
@@ -29,7 +29,7 @@ const Profile = props => {
   const {state}  = useContext(identityContext);   
   
   const user = {
-    name: state.user == null ? "" : state.user.user.userName,
+    name: state.user == null ? "" : state.user.userName,
     avatar: '/images/avatars/avatar_11.png',
     bio: ''
   };
@@ -49,6 +49,7 @@ const Profile = props => {
       <Typography
         className={classes.name}
         variant="h5"
+        
       >
         {user.name}
       </Typography>     

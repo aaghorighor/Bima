@@ -55,8 +55,20 @@
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {
-            var drivers = await _driver.AllIncludingAsync();
-            var model = _mapper.Map<List<DriverDto>>(drivers);
+            var drivers = await _driver.AllIncludingAsync();      
+            var model = _mapper.Map<List<DriverDto>>(drivers.OrderByDescending(x => x.CreatedAt));
+
+            return Ok(model);
+        }
+
+        [Authorize()]
+        [HttpGet]
+        [Route("fetchByUser")]
+        public async Task<IActionResult> FetchByUser()
+        {
+            var drivers = await _driver.AllIncludingAsync(x => x.UserId == this.UserId);
+            var driver = drivers.FirstOrDefault();
+            var model = _mapper.Map<DriverDto>(driver);
 
             return Ok(model);
         }
@@ -66,8 +78,8 @@
         [Route("pendingJobs")]
         public async Task<IActionResult> PendingJobs()
         {
-            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.Produce.Unit), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));           
-            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order));
+            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId != new Guid(eOrderStatus.Completed), (x => x.Order.Produce),(x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));           
+            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order).OrderByDescending(x=>x.CreatedAt));
 
             return Ok(model);
         }
@@ -77,8 +89,8 @@
         [Route("completedjobs")]
         public async Task<IActionResult> Completedjobs()
         {
-            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.Produce.Unit), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));
-            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order));
+            var deliveries = await _delivery.AllIncludingAsync(x => x.Driver.UserId == this.UserId && x.Order.OrderStatusId == new Guid(eOrderStatus.Completed), (x => x.Order.Produce), (x => x.Order.OrderStatus), (x => x.Order.Produce.Seller));
+            var model = _mapper.Map<List<DriverOrder>>(deliveries.Select(x => x.Order).OrderByDescending(x => x.CreatedAt));
 
             return Ok(model);
         }
@@ -182,6 +194,32 @@
             };
 
             return new OkObjectResult(_model);
+        }
+
+        [Authorize()]
+        [HttpPost]
+        [Route("edit")]
+        public IActionResult Edit([FromBody] DriverDto model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new { message = ModelState.Errors() });
+            }
+
+            var driver = _driver.GetSingle(x => x.UserId == this.UserId);
+
+            if (driver == null)
+            {
+                return BadRequest(new { message = ValidationError.DRIVER_NOT_FOUND });
+            }
+
+            driver.TransportType = model.TransportType;
+            driver.JourneyTime = model.JourneyTime;
+
+           _driver.Edit(driver);
+           _unitOfWork.SaveChanges();
+
+            return Ok(true);
         }
 
         private void updateOrderStatus(Guid orderId)

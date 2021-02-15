@@ -1,20 +1,21 @@
 ﻿namespace Suftnet.Co.Bima.Api.Controllers
 {
     using AutoMapper;
-    using Microsoft.AspNetCore.Http;   
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
-    using Suftnet.Co.Bima.Api.Extensions;   
-    using Suftnet.Co.Bima.Api.Models; 
-    using Suftnet.Co.Bima.DataAccess.Interface;
+    using Suftnet.Co.Bima.Api.Extensions;
+    using Suftnet.Co.Bima.Api.Models;
+    using Suftnet.Co.Bima.Common;
     using Suftnet.Co.Bima.DataAccess.Actions;
+    using Suftnet.Co.Bima.DataAccess.Interface;
 
     using System;
-    using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Microsoft.AspNetCore.Authorization;
-    using Suftnet.Co.Bima.Common;
-      
+    using System.Threading.Tasks;
+    using System.Linq;
+
     [Route("api/[controller]")]
     public class OrderController : BaseController
     {    
@@ -46,16 +47,15 @@
         [Route("fetch")]
         public async Task<IActionResult> Fetch()
         {
-            var orders = await _order.AllIncludingAsync();
-            var model = _mapper.Map<List<OrderDto>>(orders);
+            var orders = await _order.AllIncludingAsync((x => x.Produce), (x => x.OrderStatus), (x => x.Buyer));
+            var model = _mapper.Map<List<OrderReport>>(orders);
 
-            return Ok(model);
+            return Ok(model.OrderByDescending(x=>x.OrderDate));
         }
 
         [Authorize()]
         [HttpPost]
         [Route("updateOrderStatus")]
-
         public IActionResult UpdateOrderStatus([FromBody] UpdateStatus param)
         {
             if (!ModelState.IsValid)
@@ -78,7 +78,7 @@
                     break;
 
                 case eOrderStatus.Delivery:
-                    UpdateOrderStatus(new Guid(eOrderStatus.Completed), new Guid(param.OrderId));
+                    UpdateCompletedOrder(new Guid(eOrderStatus.Completed), new Guid(param.OrderId));
                     break;
             }
 
@@ -127,8 +127,18 @@
         }
         private void UpdateOrderStatus(Guid orderStatusId, Guid orderId)
         {
+            var order = _order.GetSingle(x => x.Id == orderId);
+            order.OrderStatusId = orderStatusId;
+          
+            _order.Edit(order);
+            _unitOfWork.SaveChanges();
+        }
+        private void UpdateCompletedOrder(Guid orderStatusId, Guid orderId)
+        {
              var order = _order.GetSingle(x => x.Id == orderId);
              order.OrderStatusId = orderStatusId;
+             order.DeliveryDate = DateTime.Now.ToLongDateString();
+
             _order.Edit(order);
             _unitOfWork.SaveChanges();
         }

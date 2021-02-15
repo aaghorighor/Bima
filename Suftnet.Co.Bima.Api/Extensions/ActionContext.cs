@@ -84,6 +84,14 @@
             return DateTime.UtcNow.Date;
         }
 
+        public static string ToDeliveryDate(this string dateString)
+        {         
+            if (string.IsNullOrEmpty(dateString))
+            {
+                return "";
+            }
 
+            return dateString;
+        }
     }
 }

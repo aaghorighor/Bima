@@ -20,9 +20,11 @@ const loadingState =()=> {
 };
 
 const loadState = (sellers) =>{
+
+    var farmers = sellers || [];
     return {
         type: actionType.LIST,
-        sellers: sellers,
+        sellers: farmers,
         message: "",       
         loading : false
     };
@@ -39,12 +41,13 @@ const errorState = error=> {
 
 export const load =(params) => {
   
-    axios({ method: 'get', url: sellerUrl.fetch, data:params ,
+    axios({ method: 'get', url: sellerUrl.fetch,
     config:  { headers: {  'Accept': 'application/json', 'Content-Type': 'application/json' }}
-      }).then((json) => { params.dispatcher(loadState(json.data)); }) 
-      .catch(error => { if (error.response && error.response.data) {
-       params.dispatcher(errorState(error.response.data));
-      }          
+      }).then((json) => { params.dispatch(loadState(json.data)); }) 
+      .catch(error => { 
+
+        console.log(error);
+        // params.dispatch(errorState(error.response.data));
     });   
 };
 
@@ -54,10 +57,8 @@ export const reducer = (state, action)=>
 
   switch(action.type)
   {     
-      case actionType.LIST :       
-
-      console.log(action.sellers);
-
+      case actionType.LIST :     
+     
           return {  
               ...state,
               sellers :action.sellers,            
